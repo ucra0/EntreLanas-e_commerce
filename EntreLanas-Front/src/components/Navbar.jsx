@@ -1,10 +1,25 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext'; 
+import { useCart } from '../context/CartContext';
 
 function Navbar() {
   const { user, logout } = useAuth();
-  const { cantidadTotal } = useCart(); 
+  const { cantidadTotal } = useCart();
+  
+  
+  const [busqueda, setBusqueda] = useState('');
+  const navigate = useNavigate();
+
+  
+  const handleBuscar = (e) => {
+    e.preventDefault();
+    if(busqueda.trim() !== '') {
+      navigate(`/productos?q=${busqueda}`); 
+    } else {
+      navigate(`/productos`);
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
@@ -13,23 +28,31 @@ function Navbar() {
           🧶 EntreLanas
         </Link>
 
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNav"
-        >
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
+          
+          {/* BUSCADOR CENTRADO */}
+          <form className="d-flex mx-auto my-2 my-lg-0 px-3" style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleBuscar}>
+            <input 
+              className="form-control form-control-sm me-2 border-0 shadow-none" 
+              type="search" 
+              placeholder="Buscar lana, muñeco..." 
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+            <button className="btn btn-light btn-sm text-primary fw-bold" type="submit">
+              🔍
+            </button>
+          </form>
+
           <ul className="navbar-nav ms-auto align-items-center">
-            
             <li className="nav-item me-3">
-              <Link className="nav-link text-white" to="/">Productos</Link>
+              <Link className="nav-link text-white fw-bold" to="/productos">Catálogo</Link>
             </li>
 
-            {}
             <li className="nav-item me-4">
               <Link to="/carrito" className="btn btn-light position-relative text-primary fw-bold btn-sm">
                 🛒 Carrito
@@ -47,9 +70,7 @@ function Navbar() {
                   <span className="text-white fw-light me-3">Hola, {user.nombre}</span>
                 </li>
                 <li className="nav-item">
-                  <button onClick={logout} className="btn btn-outline-light btn-sm fw-bold">
-                    Salir
-                  </button>
+                  <button onClick={logout} className="btn btn-outline-light btn-sm fw-bold">Salir</button>
                 </li>
               </>
             ) : (
@@ -62,7 +83,6 @@ function Navbar() {
                 </li>
               </>
             )}
-            
           </ul>
         </div>
       </div>

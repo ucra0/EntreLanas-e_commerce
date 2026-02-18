@@ -3,18 +3,15 @@ import { createContext, useState, useContext, useEffect } from 'react';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  // Aquí definimos el estado del carrito
   const [carrito, setCarrito] = useState(() => {
     const savedCart = localStorage.getItem('carrito_entrelanas');
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Guardamos en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem('carrito_entrelanas', JSON.stringify(carrito));
   }, [carrito]);
 
-  // Función para añadir
   const addToCart = (producto) => {
     setCarrito((prevCarrito) => {
       const existe = prevCarrito.find(item => item.id === producto.id);
@@ -28,22 +25,27 @@ export const CartProvider = ({ children }) => {
     alert("¡Producto añadido al carrito! 🧶");
   };
 
-  // Función para eliminar
   const removeFromCart = (productoId) => {
     setCarrito(prevCarrito => prevCarrito.filter(item => item.id !== productoId));
   };
 
-  // Cálculos
+  
+  const updateQuantity = (productoId, nuevaCantidad) => {
+    if (nuevaCantidad < 1) return; // Evitamos que pongan 0 o negativo
+    setCarrito(prevCarrito => prevCarrito.map(item =>
+      item.id === productoId ? { ...item, cantidad: nuevaCantidad } : item
+    ));
+  };
+
   const total = carrito.reduce((acc, item) => acc + (item.precio.importe * item.cantidad), 0);
   const cantidadTotal = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
-  
   return (
-    
     <CartContext.Provider value={{ 
         carrito, 
         addToCart, 
         removeFromCart, 
+        updateQuantity, 
         total, 
         cantidadTotal, 
         setCarrito 

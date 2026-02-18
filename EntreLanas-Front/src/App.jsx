@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Productos from './pages/Productos';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { CartProvider } from './context/CartContext';
@@ -10,22 +11,24 @@ import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
-    // 1. AuthProvider envuelve a toda la aplicación para que el usuario sea accesible desde cualquier sitio
+    // AuthProvider envuelve a toda la aplicación para que el usuario sea accesible desde cualquier sitio
     <AuthProvider>
 
       <CartProvider> 
       
-        {/* 2. BrowserRouter habilita la navegación sin recargar la página */}
+        {/* BrowserRouter habilita la navegación sin recargar la página */}
         <BrowserRouter>
         
-          {/* 3. El Navbar se pone AQUÍ, fuera de Routes, para que aparezca en TODAS las páginas */}
+          {/* El Navbar se pone aquí, fuera de Routes, para que aparezca en todas las páginas */}
           <Navbar />
 
-          {/* 4. Routes define qué componente se muestra según la URL */}
+          {/* Routes define qué componente se muestra según la URL */}
           <Routes>
           
             {/* Ruta principal (Home) */}
             <Route path="/" element={<Home />} />
+
+            <Route path="/productos" element={<Productos />} />
           
             {/* Ruta de Login */}
             <Route path="/login" element={<Login />} />

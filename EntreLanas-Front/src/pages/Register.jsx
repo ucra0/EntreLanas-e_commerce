@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext'; // <--- IMPORTAMOS ESTO PARA EL AUTO-LOGIN
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -8,26 +9,55 @@ function Register() {
     password: '',
     nombre: '',
     apellidos: '',
-    email: ''
+    email: '',
+    fechaNacimiento: '' // <--- NUEVO CAMPO OBLIGATORIO
   });
+  
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth(); // <--- SACAMOS LA FUNCIÓN DE INICIAR SESIÓN
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // FUNCIÓN PARA CALCULAR SI ES +18
+  const esMayorDeEdad = (fechaNacimiento) => {
+    const hoy = new Date();
+    const cumpleanos = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    const mes = hoy.getMonth() - cumpleanos.getMonth();
+    
+    // Si aún no ha llegado su mes de cumpleaños, o es el mes pero no ha llegado el día, restamos 1 año
+    if (mes < 0 || (mes === 0 && hoy.getDate() < cumpleanos.getDate())) {
+      edad--;
+    }
+    return edad >= 18;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
+    // 1. VALIDACIÓN DE EDAD ANTES DE ENVIAR AL SERVIDOR
+    if (!esMayorDeEdad(formData.fechaNacimiento)) {
+      setError("❌ Debes ser mayor de 18 años para registrarte en la tienda.");
+      return; // Cortamos la ejecución aquí
+    }
+
     try {
-      // 1. Enviamos los datos al endpoint de registro
+      // 2. REGISTRAMOS AL USUARIO EN EL BACKEND
       await axios.post('http://localhost:8080/api/auth/register', formData);
       
-      // 2. Si sale bien, redirigimos al Login para que entre
-      alert("¡Cuenta creada con éxito! Ahora puedes iniciar sesión.");
-      navigate('/login');
+      // 3. AUTO-LOGIN: Si el registro fue bien, hacemos petición de login automático
+      const resLogin = await axios.post('http://localhost:8080/api/auth/login', {
+        username: formData.username,
+        password: formData.password
+      });
+
+      // 4. GUARDAMOS SESIÓN Y VAMOS A LA HOME DIRECTAMENTE
+      login(resLogin.data);
+      navigate('/');
 
     } catch (err) {
       console.error(err);
@@ -46,7 +76,8 @@ function Register() {
           <div className="card shadow p-4 border-0">
             <h2 className="text-center mb-4 fw-bold text-primary">Crear Cuenta</h2>
             
-            {error && <div className="alert alert-danger">{error}</div>}
+            {/* AQUÍ SE MOSTRARÁ EL ERROR SI TIENE MENOS DE 18 */}
+            {error && <div className="alert alert-danger fw-bold">{error}</div>}
 
             <form onSubmit={handleSubmit}>
               <div className="row">
@@ -65,6 +96,18 @@ function Register() {
                 <input type="email" name="email" className="form-control" onChange={handleChange} required />
               </div>
 
+              {/* NUEVO CAMPO: FECHA DE NACIMIENTO */}
+              <div className="mb-3">
+                <label className="form-label fw-bold">Fecha de Nacimiento (+18)</label>
+                <input 
+                  type="date" 
+                  name="fechaNacimiento" 
+                  className="form-control" 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+
               <div className="mb-3">
                 <label className="form-label fw-bold">Usuario</label>
                 <input type="text" name="username" className="form-control" onChange={handleChange} required />
@@ -76,7 +119,7 @@ function Register() {
               </div>
 
               <div className="d-grid gap-2 mt-4">
-                <button type="submit" className="btn btn-primary fw-bold">Registrarse</button>
+                <button type="submit" className="btn btn-primary fw-bold">Registrarse y Entrar</button>
               </div>
             </form>
             

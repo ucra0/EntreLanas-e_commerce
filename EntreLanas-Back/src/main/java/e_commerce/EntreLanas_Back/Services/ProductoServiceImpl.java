@@ -48,23 +48,23 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public ProductoDetalleDTO crearProducto(ProductoDetalleDTO productoDTO) {
-        // 1. Convertimos el DTO que viene de React a una Entidad
+        
         Producto producto = productoMapper.toEntity(productoDTO);
         
-        // 2. Guardamos en BD
+        
         Producto productoNuevo = productoRepo.save(producto);
         
-        // 3. Devolvemos el DTO resultante (con el nuevo ID generado)
+        
         return productoMapper.toDetalleDTO(productoNuevo);
     }
 
     @Override
     public ProductoDetalleDTO actualizarProducto(Long id, ProductoDetalleDTO productoDTO) {
-        // 1. Buscamos si existe el producto original
+        
         Producto productoExistente = productoRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se puede actualizar, producto no encontrado"));
 
-        // 2. Actualizamos sus campos con los datos nuevos
+        
         productoExistente.setTitulo(productoDTO.getTitulo());
         productoExistente.setDescripcion(productoDTO.getDescripcion());
         productoExistente.setPrecio(productoDTO.getPrecio());
@@ -72,26 +72,26 @@ public class ProductoServiceImpl implements ProductoService {
         productoExistente.setStock(productoDTO.getStock());
         productoExistente.setCategoria(productoDTO.getCategoria());
 
-        // 3. Guardamos los cambios
+        
         Producto productoActualizado = productoRepo.save(productoExistente);
         
-        // 4. Devolvemos el DTO actualizado
+        
         return productoMapper.toDetalleDTO(productoActualizado);
     }
 
     @Override
     public void eliminarProducto(Long id) {
-        // 1. Verificamos si existe (opcional, pero recomendado)
+        
         if (!productoRepo.existsById(id)) {
             throw new RuntimeException("No se puede eliminar, producto no encontrado");
         }
-        // 2. Borramos
+    
         productoRepo.deleteById(id);
     }
 
     @Override
     public List<ProductoResumenDTO> buscarPorNombre(String texto) {
-        // Este método 'findByTituloContaining' hay que crearlo en el Repositorio
+        
         List<Producto> productosEncontrados = productoRepo.findByTituloContaining(texto);
         
         return productosEncontrados.stream()

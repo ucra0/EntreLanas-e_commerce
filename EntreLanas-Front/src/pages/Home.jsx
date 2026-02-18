@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useCart } from '../context/CartContext'; // <--- IMPORTANTE
+import { useCart } from '../context/CartContext'; 
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [productos, setProductos] = useState([]);
-  const { addToCart } = useCart(); // <--- SACAMOS LA FUNCIÓN
+  const { addToCart } = useCart(); 
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/productos')
@@ -41,13 +42,13 @@ function Home() {
                   <div className="mt-auto pt-3 d-flex justify-content-between align-items-center border-top">
                     <span className="fs-5 fw-bold text-secondary">{prod.precio.importe} €</span>
                     
-                    {/* BOTÓN DE AÑADIR AL CARRITO */}
-                    <button 
+                    {}
+                    <Link 
+                      to={`/producto/${prod.id}`} 
                       className="btn btn-primary btn-sm px-3 fw-bold"
-                      onClick={() => addToCart(prod)} // <--- AQUÍ LA MAGIA
                     >
-                      + Añadir
-                    </button>
+                      Ver detalles
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext'; // <--- IMPORTAR
+import { useCart } from '../context/CartContext'; 
 
 function Navbar() {
   const { user, logout } = useAuth();
-  const { cantidadTotal } = useCart(); // <--- SACAR EL NÚMERO DE ITEMS
+  const { cantidadTotal } = useCart(); 
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
@@ -29,7 +29,7 @@ function Navbar() {
               <Link className="nav-link text-white" to="/">Productos</Link>
             </li>
 
-            {/* BOTÓN DEL CARRITO */}
+            {}
             <li className="nav-item me-4">
               <Link to="/carrito" className="btn btn-light position-relative text-primary fw-bold btn-sm">
                 🛒 Carrito

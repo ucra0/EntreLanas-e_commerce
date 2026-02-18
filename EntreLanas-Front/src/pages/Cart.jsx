@@ -1,38 +1,36 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext'; // <--- IMPORTAMOS ESTO
+import { useAuth } from '../context/AuthContext'; 
 import { Link, useNavigate } from 'react-router-dom';
 
 function Cart() {
-  const { carrito, removeFromCart, total, setCarrito } = useCart(); // Necesitamos setCarrito para vaciarlo
-  const { user } = useAuth(); // Necesitamos saber si está logueado
+  const { carrito, removeFromCart, total, setCarrito } = useCart(); 
+  const { user } = useAuth(); 
   const navigate = useNavigate();
   const [procesando, setProcesando] = useState(false);
 
-  // FUNCIÓN DE PAGO
+ 
   const handleCheckout = () => {
-    // 1. Si no hay usuario, mandamos al Login
+    
     if (!user) {
       alert("⚠️ Debes iniciar sesión para comprar.");
       navigate('/login');
       return;
     }
 
-    // 2. Simulamos proceso de pago
+    
     setProcesando(true);
     
     setTimeout(() => {
-      // 3. ¡Éxito!
+      
       alert(`¡Gracias por tu compra, ${user.nombre}! 🧶\nTu pedido ha sido procesado.`);
       
-      // 4. Vaciamos el carrito (truco: pasamos array vacío)
-      // OJO: Tienes que añadir 'setCarrito' al export del CartContext si no lo tienes, 
-      // pero si te da error, usa un bucle rápido de borrado:
+      
       carrito.forEach(item => removeFromCart(item.id)); 
       
       setProcesando(false);
-      navigate('/'); // Volvemos a la tienda
-    }, 2000); // Tardamos 2 segundos para dar emoción
+      navigate('/'); 
+    }, 2000); 
   };
 
   if (carrito.length === 0) {
@@ -50,7 +48,7 @@ function Cart() {
       <h2 className="mb-4 fw-bold">🛒 Tu Cesta de la Compra</h2>
       
       <div className="row">
-        {/* COLUMNA IZQUIERDA */}
+        {}
         <div className="col-md-8">
           <ul className="list-group shadow-sm">
             {carrito.map((item) => (
@@ -76,7 +74,7 @@ function Cart() {
           </ul>
         </div>
 
-        {/* COLUMNA DERECHA */}
+        {}
         <div className="col-md-4">
           <div className="card shadow-sm border-0 bg-light">
             <div className="card-body">
@@ -95,7 +93,7 @@ function Cart() {
                 <span className="fs-4 fw-bold text-primary">{total.toFixed(2)} €</span>
               </div>
               
-              {/* BOTÓN CON LÓGICA */}
+              {}
               <button 
                 className="btn btn-success w-100 py-2 fw-bold shadow"
                 onClick={handleCheckout}

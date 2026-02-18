@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { CartProvider } from './context/CartContext';
 import Cart from './pages/Cart';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             {<Route path="/registro" element={<Register />} />}
 
             <Route path="/carrito" element={<Cart />} />
+
+            <Route path="/producto/:id" element={<ProductDetail />} />
 
             {/* Ruta para cualquier URL desconocida (opcional, redirige a Home) */}
             <Route path="*" element={<Home />} />

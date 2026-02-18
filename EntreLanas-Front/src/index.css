@@ -163,6 +163,7 @@ h1, h2, h3, .logo-text, .price-text {
 
 .nav-link-hover:hover {
   color: var(--accent-color) !important;
+  
   transform: translateY(-3px);
 }
 
@@ -242,9 +243,9 @@ h1, h2, h3, .logo-text, .price-text {
 
 .btn-primary-accent:hover {
   background-color: var(--accent-hover) !important; 
+  color: white !important;
   transform: translateY(-3px); 
-  box-shadow: 0 8px 20px rgba(200, 107, 94, 0.3);
-  color: white !important; 
+  box-shadow: 0 8px 20px rgba(200, 107, 94, 0.3); 
 }
 
 
@@ -334,4 +335,24 @@ h1, h2, h3, .logo-text, .price-text {
 .hover-text-danger:hover {
   color: #dc3545 !important; 
   transform: scale(1.1); /
+}
+
+
+.input-premium {
+  background-color: #f8f9fa;
+  border: 1px solid transparent;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.input-premium:focus {
+  background-color: #ffffff;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(200, 107, 94, 0.1);
+  outline: none;
+}
+
+.nav-link-hover.text-white:hover {
+    color: white !important;
 }

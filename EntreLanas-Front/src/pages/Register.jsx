@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // <--- IMPORTAMOS ESTO PARA EL AUTO-LOGIN
+import { useAuth } from '../context/AuthContext'; 
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,25 +10,24 @@ function Register() {
     nombre: '',
     apellidos: '',
     email: '',
-    fechaNacimiento: '' // <--- NUEVO CAMPO OBLIGATORIO
+    fechaNacimiento: '' 
   });
   
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { login } = useAuth(); // <--- SACAMOS LA FUNCIÓN DE INICIAR SESIÓN
+  const { login } = useAuth(); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // FUNCIÓN PARA CALCULAR SI ES +18
+  
   const esMayorDeEdad = (fechaNacimiento) => {
     const hoy = new Date();
     const cumpleanos = new Date(fechaNacimiento);
     let edad = hoy.getFullYear() - cumpleanos.getFullYear();
     const mes = hoy.getMonth() - cumpleanos.getMonth();
     
-    // Si aún no ha llegado su mes de cumpleaños, o es el mes pero no ha llegado el día, restamos 1 año
     if (mes < 0 || (mes === 0 && hoy.getDate() < cumpleanos.getDate())) {
       edad--;
     }
@@ -39,23 +38,23 @@ function Register() {
     e.preventDefault();
     setError(null);
 
-    // 1. VALIDACIÓN DE EDAD ANTES DE ENVIAR AL SERVIDOR
+    
     if (!esMayorDeEdad(formData.fechaNacimiento)) {
-      setError("❌ Debes ser mayor de 18 años para registrarte en la tienda.");
-      return; // Cortamos la ejecución aquí
+      setError("Debes ser mayor de 18 años para registrarte en la tienda.");
+      return; 
     }
 
     try {
-      // 2. REGISTRAMOS AL USUARIO EN EL BACKEND
+      
       await axios.post('http://localhost:8080/api/auth/register', formData);
       
-      // 3. AUTO-LOGIN: Si el registro fue bien, hacemos petición de login automático
+      
       const resLogin = await axios.post('http://localhost:8080/api/auth/login', {
         username: formData.username,
         password: formData.password
       });
 
-      // 4. GUARDAMOS SESIÓN Y VAMOS A LA HOME DIRECTAMENTE
+      
       login(resLogin.data);
       navigate('/');
 
@@ -70,65 +69,137 @@ function Register() {
   };
 
   return (
-    <div className="container mt-5 mb-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card shadow p-4 border-0">
-            <h2 className="text-center mb-4 fw-bold text-primary">Crear Cuenta</h2>
+    <div className="flex-grow-1 d-flex align-items-center py-5">
+      <div className="container">
+        
+        
+        <div className="card-premium overflow-hidden border-0 shadow-lg p-0" style={{ maxWidth: '1000px', margin: '0 auto', borderRadius: '25px' }}>
+          <div className="row g-0 flex-column-reverse flex-md-row">
             
-            {/* AQUÍ SE MOSTRARÁ EL ERROR SI TIENE MENOS DE 18 */}
-            {error && <div className="alert alert-danger fw-bold">{error}</div>}
-
-            <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label fw-bold">Nombre</label>
-                  <input type="text" name="nombre" className="form-control" onChange={handleChange} required />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label className="form-label fw-bold">Apellidos</label>
-                  <input type="text" name="apellidos" className="form-control" onChange={handleChange} required />
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <label className="form-label fw-bold">Email</label>
-                <input type="email" name="email" className="form-control" onChange={handleChange} required />
-              </div>
-
-              {/* NUEVO CAMPO: FECHA DE NACIMIENTO */}
-              <div className="mb-3">
-                <label className="form-label fw-bold">Fecha de Nacimiento </label>
-                <input 
-                  type="date" 
-                  name="fechaNacimiento" 
-                  className="form-control" 
-                  onChange={handleChange} 
-                  required 
-                />
-              </div>
-
-              <div className="mb-3">
-                <label className="form-label fw-bold">Usuario</label>
-                <input type="text" name="username" className="form-control" onChange={handleChange} required />
-              </div>
-
-              <div className="mb-3">
-                <label className="form-label fw-bold">Contraseña</label>
-                <input type="password" name="password" className="form-control" onChange={handleChange} required />
-              </div>
-
-              <div className="d-grid gap-2 mt-4">
-                <button type="submit" className="btn btn-primary fw-bold">Registrarse y Entrar</button>
-              </div>
-            </form>
             
-            <div className="mt-3 text-center">
-                <small>¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link></small>
+            <div className="col-md-7 col-lg-6 p-4 p-sm-5 bg-white d-flex flex-column justify-content-center">
+              
+              <div className="text-center mb-4">
+                <h2 className="logo-text fw-bold mb-2">Únete a la Familia</h2>
+                <p className="text-muted small">Crea tu cuenta para empezar a tejer historias con nosotros.</p>
+              </div>
+              
+              
+              {error && (
+                <div className="alert bg-danger bg-opacity-10 text-danger border-0 rounded-3 mb-4 d-flex align-items-center gap-2">
+                  <i className="fa-solid fa-circle-exclamation"></i>
+                  <span className="small fw-medium">{error}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
+                
+                
+                <div className="row">
+                  <div className="col-sm-6 mb-3">
+                    <label className="form-label fw-bold text-muted small text-uppercase">Nombre</label>
+                    <div className="position-relative">
+                      <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                        <i className="fa-regular fa-id-card"></i>
+                      </span>
+                      <input type="text" name="nombre" className="form-control input-premium w-100" style={{ paddingLeft: '45px' }} placeholder="Tu nombre" onChange={handleChange} required />
+                    </div>
+                  </div>
+                  <div className="col-sm-6 mb-3">
+                    <label className="form-label fw-bold text-muted small text-uppercase">Apellidos</label>
+                    <div className="position-relative">
+                      <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                        <i className="fa-regular fa-id-card"></i>
+                      </span>
+                      <input type="text" name="apellidos" className="form-control input-premium w-100" style={{ paddingLeft: '45px' }} placeholder="Tus apellidos" onChange={handleChange} required />
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div className="mb-3">
+                  <label className="form-label fw-bold text-muted small text-uppercase">Correo Electrónico</label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                      <i className="fa-regular fa-envelope"></i>
+                    </span>
+                    <input type="email" name="email" className="form-control input-premium w-100" style={{ paddingLeft: '45px' }} placeholder="ejemplo@correo.com" onChange={handleChange} required />
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label fw-bold text-muted small text-uppercase">Fecha de Nacimiento</label>
+                  <div className="position-relative">
+                    <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                      <i className="fa-solid fa-cake-candles"></i>
+                    </span>
+                    <input type="date" name="fechaNacimiento" className="form-control input-premium w-100 text-muted" style={{ paddingLeft: '45px' }} onChange={handleChange} required />
+                  </div>
+                </div>
+
+                
+                <div className="row">
+                  <div className="col-sm-6 mb-4">
+                    <label className="form-label fw-bold text-muted small text-uppercase">Usuario</label>
+                    <div className="position-relative">
+                      <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                        <i className="fa-regular fa-user"></i>
+                      </span>
+                      <input type="text" name="username" className="form-control input-premium w-100" style={{ paddingLeft: '45px' }} placeholder="Apodo" onChange={handleChange} required />
+                    </div>
+                  </div>
+                  <div className="col-sm-6 mb-4">
+                    <label className="form-label fw-bold text-muted small text-uppercase">Contraseña</label>
+                    <div className="position-relative">
+                      <span className="position-absolute top-50 translate-middle-y text-muted opacity-50" style={{ left: '15px' }}>
+                        <i className="fa-solid fa-lock"></i>
+                      </span>
+                      <input type="password" name="password" className="form-control input-premium w-100" style={{ paddingLeft: '45px' }} placeholder="••••••••" onChange={handleChange} required />
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div className="mt-4">
+                  <button type="submit" className="btn btn-primary-accent rounded-pill w-100 py-3 fs-5 shadow-sm d-flex justify-content-center align-items-center gap-2">
+                    <i className="fa-solid fa-user-plus"></i> Crear Cuenta
+                  </button>
+                </div>
+              </form>
+              
+              
+              <div className="mt-4 text-center">
+                <p className="text-muted small mb-0">
+                  ¿Ya eres parte de la familia? {' '}
+                  <Link to="/login" className="text-accent fw-bold text-decoration-none nav-link-hover">
+                    Inicia sesión aquí
+                  </Link>
+                </p>
+              </div>
+
+            </div>
+
+            
+            <div className="col-md-5 col-lg-6 d-none d-md-block position-relative">
+              <img 
+                src="/imagenes/fotoregistro.jpg" 
+                alt="Foto Registro" 
+                className="w-100 h-100" 
+                style={{ objectFit: 'cover', minHeight: '600px' }}
+              />
+              
+              <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.6))' }}></div>
+              <div className="position-absolute bottom-0 end-0 p-5 text-white text-end">
+                <h3 className="logo-text mb-3" style={{ fontSize: '2.5rem' }}>Artesanía Única</h3>
+                <p className="lead opacity-75 mb-0" style={{ maxWidth: '300px', marginLeft: 'auto' }}>
+                  Piezas exclusivas, hechas con materiales éticos y muchísimo amor.
+                </p>
+              </div>
             </div>
 
           </div>
         </div>
+
       </div>
     </div>
   );

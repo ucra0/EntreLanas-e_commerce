@@ -87,11 +87,17 @@ function Navbar() {
             {user ? (
               <>
                 <li className="nav-item d-none d-lg-block border-start mx-2" style={{ height: '20px', borderColor: 'var(--border-color)' }}></li>
-                <li className="nav-item">
-                  <span className="text-muted">Hola, {user.nombre}</span>
+                <li className="nav-item d-flex align-items-center">
+                  <span className="text-muted me-2">Hola, {user.nombre}</span>
                 </li>
                 <li className="nav-item">
-                  <button onClick={handleLogout} className="btn rounded-pill border-dark px-3 ms-2 hover-bg-dark nav-link-hover">Salir</button>
+                  <button 
+                    onClick={handleLogout} 
+                    className="btn btn-primary-accent btn-blanco-hover rounded-pill px-3 ms-2 shadow-sm d-flex align-items-center"
+                  >
+                    <i className="fa-solid fa-arrow-right-from-bracket me-2"></i> 
+                      Salir
+                  </button>
                 </li>
               </>
             ) : (

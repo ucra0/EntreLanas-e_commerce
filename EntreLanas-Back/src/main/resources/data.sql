@@ -1,17 +1,47 @@
 -- 1. USUARIOS DE PRUEBA (Contraseñas en texto plano "123")
--- Fíjate que usamos 'email' porque tu @AttributeOverride renombra la columna interna a 'email'
 INSERT INTO usuarios (username, password, nombre, apellidos, email) VALUES 
 ('admin', '123', 'Administrador', 'Jefe', 'admin@entrelanas.com'),
 ('maria', '123', 'Maria', 'Tejedora', 'maria@gmail.com'),
 ('pepe', '123', 'Pepe', 'Cliente', 'pepe@hotmail.com');
 
--- 2. PRODUCTOS DE PRUEBA
--- Categorías: AMIGURUMI, ROPA, MATERIAL (Según tu Enum)
--- Precios y Moneda (Según tu Embeddable Dinero)
+-- ==========================================
+-- 👗 ROPA (categoria, color, talla, fibra, estilo)
+-- NOTA: tipo = NULL
+-- ==========================================
+INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
+('Jersey de Invierno Clásico', 'Un jersey grueso y muy calentito, ideal para los días de nieve.', 45.99, 'EUR', 'https://placehold.co/400x400/FF0000/FFFFFF?text=Jersey+Lana', 15, 'ROPA', 'ROJO', 'ADULTO', 'LANA', 'CLASICO', NULL),
+('Gorrito Recién Nacido', 'Suave gorro para proteger la cabeza de los más pequeños. Hipoalergénico.', 12.50, 'EUR', 'https://placehold.co/400x400/FFFFFF/000000?text=Gorro+Bebe', 30, 'ROPA', 'BLANCO', 'BEBE', 'ALGODON', 'KAWAI', NULL),
+('Bufanda Premium', 'Bufanda extremadamente suave y elegante para el día a día.', 55.00, 'EUR', 'https://placehold.co/400x400/808080/FFFFFF?text=Bufanda+Gris', 10, 'ROPA', 'GRIS', 'ADULTO', 'CACHEMIRA', 'CLASICO', NULL),
+('Chaqueta Escolar', 'Chaqueta resistente para el trote diario de los niños.', 29.90, 'EUR', 'https://placehold.co/400x400/0000FF/FFFFFF?text=Chaqueta+Azul', 25, 'ROPA', 'AZUL', 'NIÑO', 'POLIESTER', NULL, NULL),
+('Calcetines Transpirables', 'Calcetines de fibra natural, evitan la humedad y son muy cómodos.', 9.99, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Calcetines', 50, 'ROPA', 'VERDE', 'ADULTO', 'BAMBU', NULL, NULL),
+('Vestido Veraniego', 'Prenda fresca y ligera, ideal para paseos por la playa.', 34.50, 'EUR', 'https://placehold.co/400x400/FFFF00/000000?text=Vestido+Lino', 12, 'ROPA', 'AMARILLO', 'NIÑO', 'LINO', 'CLASICO', NULL),
+('Manoplas de Paseo', 'Manoplas brillantes y muy suaves para proteger las manitas.', 14.00, 'EUR', 'https://placehold.co/400x400/FFC0CB/000000?text=Manoplas', 40, 'ROPA', 'ROSA', 'BEBE', 'SEDA', NULL, NULL),
+('Suéter Deportivo', 'Prenda flexible que se adapta a los movimientos.', 39.99, 'EUR', 'https://placehold.co/400x400/000000/FFFFFF?text=Sueter+Negro', 18, 'ROPA', 'NEGRO', 'ADULTO', 'NAILON', 'REALISTA', NULL);
 
-INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria) VALUES 
-('Muñeco de Nieve', 'Amigurumi hecho a mano con lana suave, ideal para navidad.', 15.50, 'EUR', 'https://placehold.co/300x200?text=Muneco', 10, 'AMIGURUMI'),
-('Bufanda Infinita', 'Bufanda circular de lana merino color mostaza.', 25.00, 'EUR', 'https://placehold.co/300x200?text=Bufanda', 5, 'ROPA'),
-('Pack Agujas Crochet', 'Set de 5 agujas de aluminio con mango ergonómico.', 12.99, 'EUR', 'https://placehold.co/300x200?text=Agujas', 50, 'MATERIAL'),
-('Oso Dormilón', 'Peluche tejido a crochet, apto para bebés.', 18.00, 'EUR', 'https://placehold.co/300x200?text=Oso', 3, 'AMIGURUMI'),
-('Gorro de Lana', 'Gorro con pompón, talla única, varios colores.', 10.00, 'EUR', 'https://placehold.co/300x200?text=Gorro', 20, 'ROPA');
+-- ==========================================
+-- 🧸 AMIGURUMI (categoria, color, fibra, estilo, tipo)
+-- NOTA: talla = NULL
+-- ==========================================
+INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
+('Pulpito Reversible', 'El famoso pulpito que muestra tu estado de ánimo. ¡Súper adorable!', 15.00, 'EUR', 'https://placehold.co/400x400/800080/FFFFFF?text=Pulpito', 20, 'AMIGURUMI', 'MORADO', NULL, 'ALGODON', 'KAWAI', 'MINI'),
+('Perrito Guardián', 'Fiel compañero para tus llaves con mucho nivel de detalle.', 8.50, 'EUR', 'https://placehold.co/400x400/8B4513/FFFFFF?text=Llavero+Perro', 35, 'AMIGURUMI', 'MARRON', NULL, 'LANA', 'REALISTA', 'LLAVERO'),
+('Cactus Sonriente', 'No pincha, no necesita agua y siempre te sonríe desde la estantería.', 22.00, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Cactus', 15, 'AMIGURUMI', 'VERDE', NULL, 'ALGODON', 'KAWAI', 'INANIMADO'),
+('Osito Tradicional', 'El clásico oso de peluche en formato miniatura.', 18.99, 'EUR', 'https://placehold.co/400x400/FFFFFF/000000?text=Oso+Peluche', 22, 'AMIGURUMI', 'BLANCO', NULL, 'LANA', 'CLASICO', 'MINI'),
+('Aguacate Feliz', 'Ideal para colgar en la mochila del colegio o las llaves de casa.', 7.99, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Aguacate', 45, 'AMIGURUMI', 'VERDE', NULL, 'BAMBU', 'KAWAI', 'LLAVERO'),
+('Taza de Café', 'Para los adictos al café. Un adorno perfecto para el escritorio.', 16.50, 'EUR', 'https://placehold.co/400x400/8B4513/FFFFFF?text=Taza+Cafe', 10, 'AMIGURUMI', 'MARRON', NULL, 'ALGODON', 'REALISTA', 'INANIMADO'),
+('Gatito de la Suerte', 'Mini amigurumi para atraer la buena fortuna.', 12.00, 'EUR', 'https://placehold.co/400x400/000000/FFFFFF?text=Gato+Negro', 30, 'AMIGURUMI', 'NEGRO', NULL, 'LANA', 'KAWAI', 'MINI'),
+('Solecito Brillante', 'Un llavero que ilumina hasta los días más nublados.', 6.50, 'EUR', 'https://placehold.co/400x400/FFA500/000000?text=Sol', 50, 'AMIGURUMI', 'NARANJA', NULL, 'POLIESTER', 'KAWAI', 'LLAVERO');
+
+-- ==========================================
+-- 🧶 MATERIAL (categoria, color, fibra)
+-- NOTA: talla, estilo y tipo = NULL
+-- ==========================================
+INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
+('Ovillo Merino Premium', 'Lana de altísima calidad, no pica y es muy fácil de tejer.', 8.90, 'EUR', 'https://placehold.co/400x400/FFFFFF/000000?text=Ovillo+Lana', 100, 'MATERIAL', 'BLANCO', NULL, 'LANA', NULL, NULL),
+('Bobina Hilo Brillante', 'Hilo fino para detalles delicados y bordados premium.', 12.50, 'EUR', 'https://placehold.co/400x400/FF0000/FFFFFF?text=Hilo+Seda', 60, 'MATERIAL', 'ROJO', NULL, 'SEDA', NULL, NULL),
+('Ovillo Peinado 100g', 'El todoterreno de los amigurumis. No se deshilacha.', 4.50, 'EUR', 'https://placehold.co/400x400/0000FF/FFFFFF?text=Ovillo+Algodon', 150, 'MATERIAL', 'AZUL', NULL, 'ALGODON', NULL, NULL),
+('Cono Hilo Rústico', 'Ideal para prendas de verano y bolsos de macramé.', 15.00, 'EUR', 'https://placehold.co/400x400/8B4513/FFFFFF?text=Hilo+Lino', 40, 'MATERIAL', 'MARRON', NULL, 'LINO', NULL, NULL),
+('Madeja Lujo', 'Para esos proyectos especiales que requieren lo mejor de lo mejor.', 24.00, 'EUR', 'https://placehold.co/400x400/808080/FFFFFF?text=Cachemira', 20, 'MATERIAL', 'GRIS', NULL, 'CACHEMIRA', NULL, NULL),
+('Ovillo Eco-Friendly', 'Sostenible, hipoalergénico y con un tacto súper suave.', 6.80, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Ovillo+Bambu', 80, 'MATERIAL', 'VERDE', NULL, 'BAMBU', NULL, NULL),
+('Bobina Ultra Resistente', 'Para costuras que necesiten aguantar mucha tensión.', 3.50, 'EUR', 'https://placehold.co/400x400/000000/FFFFFF?text=Hilo+Nailon', 200, 'MATERIAL', 'NEGRO', NULL, 'NAILON', NULL, NULL),
+('Cuerda Trenzada', 'Perfecta para correas, cinturones o detalles estructurales.', 5.99, 'EUR', 'https://placehold.co/400x400/FFA500/000000?text=Cuerda+Poliester', 90, 'MATERIAL', 'NARANJA', NULL, 'POLIESTER', NULL, NULL);

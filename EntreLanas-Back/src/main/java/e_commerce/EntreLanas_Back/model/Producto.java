@@ -1,6 +1,11 @@
 package e_commerce.EntreLanas_Back.model;
 
 import e_commerce.EntreLanas_Back.model.Enums.Categoria;
+import e_commerce.EntreLanas_Back.model.Enums.Color;
+import e_commerce.EntreLanas_Back.model.Enums.Estilos;
+import e_commerce.EntreLanas_Back.model.Enums.Fibra;
+import e_commerce.EntreLanas_Back.model.Enums.Talla;
+import e_commerce.EntreLanas_Back.model.Enums.Tipos;
 import e_commerce.EntreLanas_Back.model.vo.Dinero;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -39,6 +44,21 @@ public class Producto {
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria", nullable = false)
     private Categoria categoria;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "color")
+    private Color color;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "talla")
+    private Talla talla;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fibra")
+    private Fibra fibra;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estilo")
+    private Estilos estilo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private Tipos tipo;
     
     
     
@@ -48,7 +68,7 @@ public class Producto {
 
 
     public Producto(Long producto_id, String titulo, String descripcion, Dinero precio, String imagen, Integer stock,
-            Categoria categoria) {
+            Categoria categoria, Color color, Talla talla, Fibra fibra, Estilos estilo, Tipos tipo) {
         this.producto_id = producto_id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -56,6 +76,11 @@ public class Producto {
         this.imagen = imagen;
         this.stock = stock;
         this.categoria = categoria;
+        this.color = color;
+        this.talla = talla;
+        this.fibra = fibra;
+        this.estilo = estilo;
+        this.tipo = tipo;
     }
 
 
@@ -131,9 +156,71 @@ public class Producto {
 
 
 
+    public Color getColor() {
+        return color;
+    }
+
+
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+
+
+    public Talla getTalla() {
+        return talla;
+    }
+
+
+
+    public void setTalla(Talla talla) {
+        this.talla = talla;
+    }
+
+
+
+    public Fibra getFibra() {
+        return fibra;
+    }
+
+
+
+    public void setFibra(Fibra fibra) {
+        this.fibra = fibra;
+    }
+
+
+
+    public Estilos getEstilo() {
+        return estilo;
+    }
+
+
+
+    public void setEstilo(Estilos estilo) {
+        this.estilo = estilo;
+    }
+
+
+
+    public Tipos getTipo() {
+        return tipo;
+    }
+
+
+
+    public void setTipo(Tipos tipo) {
+        this.tipo = tipo;
+    }
+
+
+
     @Override
     public String toString() {
         return "Producto [producto_id=" + producto_id + ", titulo=" + titulo + ", descripcion=" + descripcion
-                + ", precio=" + precio + ", imagen=" + imagen + ", stock=" + stock + ", categoria=" + categoria + "]";
-    }
+                + ", precio=" + precio + ", imagen=" + imagen + ", stock=" + stock + ", categoria=" + categoria
+                + ", color=" + color + ", talla=" + talla + ", fibra=" + fibra + ", estilo=" + estilo + ", tipo=" + tipo
+                + "]";
+    }    
 }

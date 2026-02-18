@@ -1,25 +1,39 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 function Navbar() {
   const { user, logout } = useAuth();
-  const { cantidadTotal } = useCart();
-  
+  const { cantidadTotal, setCarrito } = useCart();
   
   const [busqueda, setBusqueda] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
-  
-  const handleBuscar = (e) => {
-    e.preventDefault();
-    if(busqueda.trim() !== '') {
-      navigate(`/productos?q=${busqueda}`); 
+  const handleBuscar = (texto) => {
+    setBusqueda(texto);
+    if (texto.trim() !== '') {
+      navigate(`/productos?q=${texto}`);
     } else {
-      navigate(`/productos`);
+      navigate(`/`);
     }
   };
+
+  const handleCartClick = (e) => {
+    if (!user) {
+      e.preventDefault();
+      alert("Debes iniciar sesión para poder usar el carrito de la compra.");
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setCarrito([]);
+    navigate('/');
+  };
+
+  const esPaginaAuth = location.pathname === '/login' || location.pathname === '/registro';
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
@@ -34,35 +48,44 @@ function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           
-          {/* BUSCADOR CENTRADO */}
-          <form className="d-flex mx-auto my-2 my-lg-0 px-3" style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleBuscar}>
+          <form className="d-flex mx-auto my-2 my-lg-0 px-3" style={{ maxWidth: "400px", width: "100%" }} onSubmit={(e) => e.preventDefault()}>
             <input 
-              className="form-control form-control-sm me-2 border-0 shadow-none" 
+              className="form-control form-control-sm border-0 shadow-none rounded-pill px-3" 
               type="search" 
-              placeholder="Buscar lana, muñeco..." 
+              placeholder="🔍 Buscar lana, muñeco..." 
               value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
+              onChange={(e) => handleBuscar(e.target.value)}
             />
-            <button className="btn btn-light btn-sm text-primary fw-bold" type="submit">
-              🔍
-            </button>
           </form>
 
           <ul className="navbar-nav ms-auto align-items-center">
-            <li className="nav-item me-3">
-              <Link className="nav-link text-white fw-bold" to="/productos">Catálogo</Link>
+            
+            {/* MENÚ DESPLEGABLE */}
+            <li className="nav-item dropdown me-3">
+              <a className="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Catálogo
+              </a>
+              <ul className="dropdown-menu shadow border-0 mt-2" aria-labelledby="navbarDropdown">
+                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=ROPA">👗 Ropa</Link></li>
+                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=MATERIAL">🧶 Material</Link></li>
+                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=AMIGURUMI">🧸 Amigurumis</Link></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><Link className="dropdown-item" to="/productos">Ver todo el catálogo</Link></li>
+              </ul>
             </li>
 
-            <li className="nav-item me-4">
-              <Link to="/carrito" className="btn btn-light position-relative text-primary fw-bold btn-sm">
-                🛒 Carrito
-                {cantidadTotal > 0 && (
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {cantidadTotal}
-                  </span>
-                )}
-              </Link>
-            </li>
+            {!esPaginaAuth && (
+              <li className="nav-item me-4">
+                <Link to="/carrito" className="btn btn-light position-relative text-primary fw-bold btn-sm" onClick={handleCartClick}>
+                  🛒 Carrito
+                  {cantidadTotal > 0 && user && (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {cantidadTotal}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            )}
 
             {user ? (
               <>
@@ -70,7 +93,7 @@ function Navbar() {
                   <span className="text-white fw-light me-3">Hola, {user.nombre}</span>
                 </li>
                 <li className="nav-item">
-                  <button onClick={logout} className="btn btn-outline-light btn-sm fw-bold">Salir</button>
+                  <button onClick={handleLogout} className="btn btn-outline-light btn-sm fw-bold">Salir</button>
                 </li>
               </>
             ) : (

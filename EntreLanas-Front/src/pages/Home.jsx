@@ -6,7 +6,7 @@ function Home() {
   const [destacados, setDestacados] = useState([]);
 
   useEffect(() => {
-    
+  
     axios.get('http://localhost:8080/api/productos')
       .then(res => setDestacados(res.data.slice(0, 4)))
       .catch(err => console.error(err));
@@ -34,17 +34,29 @@ function Home() {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
           {destacados.map((prod) => (
             <div key={prod.id} className="col">
-              <div className="card h-100 shadow-sm border-0">
-                <div style={{ height: "200px", overflow: "hidden" }}>
+              <div className="card h-100 shadow-sm border-0 transition-hover">
+                
+                <div className="position-relative" style={{ height: "200px", overflow: "hidden" }}>
                   <img src={prod.imagen} className="card-img-top w-100 h-100" alt={prod.titulo} style={{ objectFit: "cover" }} />
+                  {}
+                  <span className="position-absolute top-0 start-0 m-2 badge bg-primary bg-opacity-75 text-white text-capitalize shadow-sm">
+                    {prod.categoria?.toLowerCase()}
+                  </span>
                 </div>
-                <div className="card-body text-center">
-                  <h6 className="fw-bold">{prod.titulo}</h6>
-                  <p className="text-primary fw-bold mb-3">{prod.precio.importe} €</p>
-                  <Link to={`/producto/${prod.id}`} className="btn btn-outline-primary btn-sm w-100">
+
+                <div className="card-body text-center d-flex flex-column">
+                  <h6 className="fw-bold text-dark">{prod.titulo}</h6>
+                  
+                  {}
+                  <p className="text-primary fw-bold fs-5 mt-auto mb-3">
+                    {prod.precio.importe} {prod.precio.moneda === 'EUR' ? '€' : prod.precio.moneda}
+                  </p>
+                  
+                  <Link to={`/producto/${prod.id}`} className="btn btn-outline-primary btn-sm w-100 fw-bold">
                     Ver detalles
                   </Link>
                 </div>
+
               </div>
             </div>
           ))}
@@ -62,14 +74,13 @@ function Home() {
               <p className="text-muted"><i className="bi bi-envelope-fill text-primary"></i> hola@entrelanas.com</p>
               <div className="mt-4">
                 <h5 className="fw-bold">Síguenos</h5>
-                <a href="#" className="btn btn-outline-primary btn-sm me-2">Instagram</a>
-                <a href="#" className="btn btn-outline-primary btn-sm me-2">Facebook</a>
-                <a href="#" className="btn btn-outline-primary btn-sm">TikTok</a>
+                <button className="btn btn-outline-primary btn-sm me-2">Instagram</button>
+                <button className="btn btn-outline-primary btn-sm me-2">Facebook</button>
+                <button className="btn btn-outline-primary btn-sm">TikTok</button>
               </div>
             </div>
             
             <div className="col-md-6">
-              {/* Mapa Ficticio incrustado */}
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.6035133283256!2d-3.703790184600674!3d40.41677537936573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e19e23f5f%3A0x6fb0d7fc219270!2sPuerta%20del%20Sol%2C%20Madrid!5e0!3m2!1ses!2ses!4v1629883582453!5m2!1ses!2ses" 
                 width="100%" 
@@ -77,6 +88,7 @@ function Home() {
                 style={{ border: 0, borderRadius: "10px" }} 
                 allowFullScreen="" 
                 loading="lazy"
+                title="Mapa de la tienda"
               ></iframe>
             </div>
           </div>

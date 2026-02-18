@@ -98,7 +98,7 @@ function Register() {
 
               {/* NUEVO CAMPO: FECHA DE NACIMIENTO */}
               <div className="mb-3">
-                <label className="form-label fw-bold">Fecha de Nacimiento (+18)</label>
+                <label className="form-label fw-bold">Fecha de Nacimiento </label>
                 <input 
                   type="date" 
                   name="fechaNacimiento" 

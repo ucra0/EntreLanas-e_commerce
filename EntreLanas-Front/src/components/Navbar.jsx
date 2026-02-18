@@ -6,18 +6,14 @@ import { useCart } from '../context/CartContext';
 function Navbar() {
   const { user, logout } = useAuth();
   const { cantidadTotal, setCarrito } = useCart();
-  
   const [busqueda, setBusqueda] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleBuscar = (texto) => {
     setBusqueda(texto);
-    if (texto.trim() !== '') {
-      navigate(`/productos?q=${texto}`);
-    } else {
-      navigate(`/`);
-    }
+    if (texto.trim() !== '') navigate(`/productos?q=${texto}`);
+    else navigate(`/`);
   };
 
   const handleCartClick = (e) => {
@@ -36,52 +32,51 @@ function Navbar() {
   const esPaginaAuth = location.pathname === '/login' || location.pathname === '/registro';
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
-      <div className="container">
-        <Link className="navbar-brand fw-bold fs-4 d-flex align-items-center" to="/">
-          🧶 EntreLanas
+    <nav className="navbar navbar-expand-lg sticky-top" style={{ backgroundColor: 'rgba(253, 251, 247, 0.9)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border-color)' }}>
+      <div className="container py-2">
+        <Link className="navbar-brand logo-text fs-3 text-dark d-flex align-items-center gap-2" to="/">
+          <i className="fa-solid fa-cookie-bite text-accent"></i> EntreLanas
         </Link>
 
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span className="navbar-toggler-icon"></span>
+        <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <i className="fa-solid fa-bars fs-4 text-dark"></i>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
           
-          <form className="d-flex mx-auto my-2 my-lg-0 px-3" style={{ maxWidth: "400px", width: "100%" }} onSubmit={(e) => e.preventDefault()}>
+          <form className="d-flex mx-auto my-3 my-lg-0 search-bar-custom" onSubmit={(e) => e.preventDefault()}>
+            <i className="fa-solid fa-magnifying-glass text-muted mt-1"></i>
             <input 
-              className="form-control form-control-sm border-0 shadow-none rounded-pill px-3" 
+              className="ms-2" 
               type="search" 
-              placeholder="🔍 Buscar lana, muñeco..." 
+              placeholder="Buscar lana, muñeco..." 
               value={busqueda}
               onChange={(e) => handleBuscar(e.target.value)}
             />
           </form>
 
-          <ul className="navbar-nav ms-auto align-items-center">
+          <ul className="navbar-nav ms-auto align-items-center fw-medium text-dark gap-3">
             
-            {/* MENÚ DESPLEGABLE */}
-            <li className="nav-item dropdown me-3">
-              <a className="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Catálogo
+            {/* BOTÓN CATÁLOGO SIN FLECHA Y CON HOVER */}
+            <li className="nav-item dropdown">
+              <a className="nav-link text-dark dropdown-toggle no-arrow nav-link-hover px-3" href="#" data-bs-toggle="dropdown">
+                <i className="fa-solid fa-layer-group text-accent me-1"></i> Catálogo
               </a>
-              <ul className="dropdown-menu shadow border-0 mt-2" aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=ROPA">👗 Ropa</Link></li>
-                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=MATERIAL">🧶 Material</Link></li>
-                <li><Link className="dropdown-item fw-bold text-primary" to="/productos?categoria=AMIGURUMI">🧸 Amigurumis</Link></li>
+              <ul className="dropdown-menu shadow border-0 mt-2 border-radius-custom">
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=ROPA">👗 Ropa</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=MATERIAL">🧶 Material</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=AMIGURUMI">🧸 Amigurumis</Link></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><Link className="dropdown-item" to="/productos">Ver todo el catálogo</Link></li>
+                <li><Link className="dropdown-item nav-link-hover" to="/productos">Ver todo el catálogo</Link></li>
               </ul>
             </li>
 
             {!esPaginaAuth && (
-              <li className="nav-item me-4">
-                <Link to="/carrito" className="btn btn-light position-relative text-primary fw-bold btn-sm" onClick={handleCartClick}>
-                  🛒 Carrito
+              <li className="nav-item">
+                <Link to="/carrito" className="nav-link text-dark d-flex align-items-center gap-2 rounded-pill px-3 border border-secondary border-opacity-25 nav-link-hover" onClick={handleCartClick}>
+                  <i className="fa-solid fa-cart-shopping"></i> Carrito
                   {cantidadTotal > 0 && user && (
-                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                      {cantidadTotal}
-                    </span>
+                    <span className="badge rounded-pill bg-accent">{cantidadTotal}</span>
                   )}
                 </Link>
               </li>
@@ -89,20 +84,22 @@ function Navbar() {
 
             {user ? (
               <>
-                <li className="nav-item border-start ps-3 border-white border-opacity-25">
-                  <span className="text-white fw-light me-3">Hola, {user.nombre}</span>
+                <li className="nav-item d-none d-lg-block border-start mx-2" style={{ height: '20px', borderColor: 'var(--border-color)' }}></li>
+                <li className="nav-item">
+                  <span className="text-muted">Hola, {user.nombre}</span>
                 </li>
                 <li className="nav-item">
-                  <button onClick={handleLogout} className="btn btn-outline-light btn-sm fw-bold">Salir</button>
+                  <button onClick={handleLogout} className="btn rounded-pill border-dark px-3 ms-2 hover-bg-dark nav-link-hover">Salir</button>
                 </li>
               </>
             ) : (
               <>
-                <li className="nav-item border-start ps-3 border-white border-opacity-25">
-                  <Link className="btn btn-outline-light btn-sm me-2" to="/login">Entrar</Link>
+                <li className="nav-item d-none d-lg-block border-start mx-2" style={{ height: '20px', borderColor: 'var(--border-color)' }}></li>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark nav-link-hover" to="/login">Entrar</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="btn btn-light text-primary btn-sm fw-bold" to="/registro">Registrarse</Link>
+                  <Link className="btn bg-accent rounded-pill px-4 ms-2 shadow-sm nav-link-hover text-white" to="/registro">Registrarse</Link>
                 </li>
               </>
             )}

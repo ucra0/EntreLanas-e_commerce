@@ -9,23 +9,23 @@ INSERT INTO usuarios (username, password, nombre, apellidos, email) VALUES
 -- NOTA: tipo = NULL
 -- ==========================================
 INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
-('Jersey de Invierno Clásico', 'Un jersey grueso y muy calentito, ideal para los días de nieve.', 45.99, 'EUR', 'https://placehold.co/400x400/FF0000/FFFFFF?text=Jersey+Lana', 15, 'ROPA', 'ROJO', 'ADULTO', 'LANA', 'CLASICO', NULL),
-('Gorrito Recién Nacido', 'Suave gorro para proteger la cabeza de los más pequeños. Hipoalergénico.', 12.50, 'EUR', 'https://placehold.co/400x400/FFFFFF/000000?text=Gorro+Bebe', 30, 'ROPA', 'BLANCO', 'BEBE', 'ALGODON', 'KAWAI', NULL),
-('Bufanda Premium', 'Bufanda extremadamente suave y elegante para el día a día.', 55.00, 'EUR', 'https://placehold.co/400x400/808080/FFFFFF?text=Bufanda+Gris', 10, 'ROPA', 'GRIS', 'ADULTO', 'CACHEMIRA', 'CLASICO', NULL),
-('Chaqueta Escolar', 'Chaqueta resistente para el trote diario de los niños.', 29.90, 'EUR', 'https://placehold.co/400x400/0000FF/FFFFFF?text=Chaqueta+Azul', 25, 'ROPA', 'AZUL', 'NIÑO', 'POLIESTER', NULL, NULL),
-('Calcetines Transpirables', 'Calcetines de fibra natural, evitan la humedad y son muy cómodos.', 9.99, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Calcetines', 50, 'ROPA', 'VERDE', 'ADULTO', 'BAMBU', NULL, NULL),
-('Vestido Veraniego', 'Prenda fresca y ligera, ideal para paseos por la playa.', 34.50, 'EUR', 'https://placehold.co/400x400/FFFF00/000000?text=Vestido+Lino', 12, 'ROPA', 'AMARILLO', 'NIÑO', 'LINO', 'CLASICO', NULL),
-('Manoplas de Paseo', 'Manoplas brillantes y muy suaves para proteger las manitas.', 14.00, 'EUR', 'https://placehold.co/400x400/FFC0CB/000000?text=Manoplas', 40, 'ROPA', 'ROSA', 'BEBE', 'SEDA', NULL, NULL),
-('Suéter Deportivo', 'Prenda flexible que se adapta a los movimientos.', 39.99, 'EUR', 'https://placehold.co/400x400/000000/FFFFFF?text=Sueter+Negro', 18, 'ROPA', 'NEGRO', 'ADULTO', 'NAILON', 'REALISTA', NULL);
+('Jersey de Invierno Clásico', 'Un jersey grueso y muy calentito, ideal para los días de nieve.', 45.99, 'EUR', '/imagenes/jerseyRojoLana.jpg', 15, 'ROPA', 'ROJO', 'ADULTO', 'LANA', 'CLASICO', NULL),
+('Gorrito Recién Nacido', 'Suave gorro para proteger la cabeza de los más pequeños. Hipoalergénico.', 12.50, 'EUR', '/imagenes/gorroBlancoAlgodonBebe.jpg', 30, 'ROPA', 'BLANCO', 'BEBE', 'ALGODON', 'KAWAI', NULL),
+('Bufanda Premium', 'Bufanda extremadamente suave y elegante para el día a día.', 55.00, 'EUR', 'imagenes/bufandaGrisClasica.jpg', 10, 'ROPA', 'GRIS', 'ADULTO', 'CACHEMIRA', 'CLASICO', NULL),
+('Chaqueta Escolar', 'Chaqueta resistente para el trote diario de los niños.', 29.90, 'EUR', '/imagenes/chaquetaEscolaAzul.jpg', 25, 'ROPA', 'AZUL', 'NIÑO', 'POLIESTER', NULL, NULL),
+('Calcetines Transpirables', 'Calcetines de fibra natural, evitan la humedad y son muy cómodos.', 9.99, 'EUR', 'imagenes/calcetinesVerdesBambu.jpg', 50, 'ROPA', 'VERDE', 'ADULTO', 'BAMBU', NULL, NULL),
+('Vestido Veraniego', 'Prenda fresca y ligera, ideal para paseos por la playa.', 34.50, 'EUR', '/imagenes/vestidoAmarilloLino.jpg', 12, 'ROPA', 'AMARILLO', 'NIÑO', 'LINO', 'CLASICO', NULL),
+('Manoplas de Paseo', 'Manoplas brillantes y muy suaves para proteger las manitas.', 14.00, 'EUR', '/imagenes/manoplasRosasSeda.jpg', 40, 'ROPA', 'ROSA', 'BEBE', 'SEDA', NULL, NULL),
+('Suéter Deportivo', 'Prenda flexible que se adapta a los movimientos.', 39.99, 'EUR', '/imagenes/chaquetaNegraNailon.jpg', 18, 'ROPA', 'NEGRO', 'ADULTO', 'NAILON', 'REALISTA', NULL);
 
 -- ==========================================
 -- 🧸 AMIGURUMI (categoria, color, fibra, estilo, tipo)
 -- NOTA: talla = NULL
 -- ==========================================
 INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
-('Pulpito Reversible', 'El famoso pulpito que muestra tu estado de ánimo. ¡Súper adorable!', 15.00, 'EUR', 'https://placehold.co/400x400/800080/FFFFFF?text=Pulpito', 20, 'AMIGURUMI', 'MORADO', NULL, 'ALGODON', 'KAWAI', 'MINI'),
-('Perrito Guardián', 'Fiel compañero para tus llaves con mucho nivel de detalle.', 8.50, 'EUR', 'https://placehold.co/400x400/8B4513/FFFFFF?text=Llavero+Perro', 35, 'AMIGURUMI', 'MARRON', NULL, 'LANA', 'REALISTA', 'LLAVERO'),
-('Cactus Sonriente', 'No pincha, no necesita agua y siempre te sonríe desde la estantería.', 22.00, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Cactus', 15, 'AMIGURUMI', 'VERDE', NULL, 'ALGODON', 'KAWAI', 'INANIMADO'),
+('Pulpito Reversible', 'El famoso pulpito que muestra tu estado de ánimo. ¡Súper adorable!', 15.00, 'EUR', '/imagenes/pulpitoMoradoAlgodon.jpg', 20, 'AMIGURUMI', 'MORADO', NULL, 'ALGODON', 'KAWAI', 'MINI'),
+('Perrito Guardián', 'Fiel compañero para tus llaves con mucho nivel de detalle.', 8.50, 'EUR', '/imagenes/perritoLlaveroMarron.jpg', 35, 'AMIGURUMI', 'MARRON', NULL, 'LANA', 'REALISTA', 'LLAVERO'),
+('Cactus Sonriente', 'No pincha, no necesita agua y siempre te sonríe desde la estantería.', 22.00, 'EUR', '/imagenes/cactusSonriente.jpg', 15, 'AMIGURUMI', 'VERDE', NULL, 'ALGODON', 'KAWAI', 'INANIMADO'),
 ('Osito Tradicional', 'El clásico oso de peluche en formato miniatura.', 18.99, 'EUR', 'https://placehold.co/400x400/FFFFFF/000000?text=Oso+Peluche', 22, 'AMIGURUMI', 'BLANCO', NULL, 'LANA', 'CLASICO', 'MINI'),
 ('Aguacate Feliz', 'Ideal para colgar en la mochila del colegio o las llaves de casa.', 7.99, 'EUR', 'https://placehold.co/400x400/008000/FFFFFF?text=Aguacate', 45, 'AMIGURUMI', 'VERDE', NULL, 'BAMBU', 'KAWAI', 'LLAVERO'),
 ('Taza de Café', 'Para los adictos al café. Un adorno perfecto para el escritorio.', 16.50, 'EUR', 'https://placehold.co/400x400/8B4513/FFFFFF?text=Taza+Cafe', 10, 'AMIGURUMI', 'MARRON', NULL, 'ALGODON', 'REALISTA', 'INANIMADO'),

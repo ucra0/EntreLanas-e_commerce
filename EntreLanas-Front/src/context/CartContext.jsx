@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
       }
       return [...prevCarrito, { ...producto, cantidad: 1 }];
     });
-    alert("¡Producto añadido al carrito! 🧶");
+    // alert("¡Producto añadido al carrito! ");
   };
 
   const removeFromCart = (productoId) => {

@@ -14,7 +14,7 @@ function Home() {
 
   return (
     
-    <div className="flex-grow-1">
+    <div className="flex-grow-1"> 
       
       {/* SECCIÓN HERO */}
       <div className="container py-5 my-lg-5">
@@ -29,7 +29,9 @@ function Home() {
             <p className="lead text-muted mb-5" style={{ maxWidth: '500px', margin: '0 auto 0 0' }}>
               Somos una pequeña tienda artesanal apasionada por el tejido. Cada una de nuestras prendas y peluches está hecha a mano con lanas de origen ético y mucho amor. ¡Encuentra tu pieza única!
             </p>
-            <Link to="/productos" className="btn bg-accent rounded-pill px-5 py-3 fs-5 shadow-sm nav-link-hover text-white">
+            
+            
+            <Link to="/productos" className="btn btn-primary-accent rounded-pill px-5 py-3 fs-5">
               Ver todo el catálogo
             </Link>
           </div>
@@ -53,7 +55,7 @@ function Home() {
         
         
         <h2 className="logo-text mb-5 title-impressive">
-          
+           
           Productos Destacados
         </h2>
         
@@ -73,13 +75,13 @@ function Home() {
                   <img src={prod.imagen} alt={prod.titulo} />
                 </div>
                 
-                
+              
                 <h5 className="fw-bold mt-2 mb-1">{prod.titulo}</h5>
                 <p className="price-text fs-4 mb-4 mt-auto">
                   {prod.precio.importe} {prod.precio.moneda === 'EUR' ? '€' : prod.precio.moneda}
                 </p>
                 
-                
+               
                 <Link to={`/producto/${prod.id}`} className="btn btn-outline-accent w-100 py-2">
                   Ver detalles
                 </Link>
@@ -91,41 +93,54 @@ function Home() {
       </div>
 
       {/* FOOTER */}
-      <footer className="bg-white border-top py-5">
-        <div className="container py-4">
-          <div className="row gap-4 gap-lg-0">
-            
+      <footer className="bg-white border-top py-5 mt-auto" style={{ boxShadow: '0 -10px 30px rgba(0,0,0,0.02)' }}>
+        <div className="container py-5">
+          <div className="row gap-5 gap-lg-0 align-items-center">
             
             <div className="col-lg-6">
-              <h3 className="logo-text mb-4 fs-2">Dónde Encontrarnos</h3>
-              <p className="text-muted fs-5"><i className="fa-solid fa-location-dot text-accent me-3"></i> Calle de la Lana Mágica, 42. Madrid.</p>
-              <p className="text-muted fs-5"><i className="fa-solid fa-phone text-accent me-3"></i> +34 912 345 678</p>
-              <p className="text-muted fs-5"><i className="fa-regular fa-envelope text-accent me-3"></i> hola@entrelanas.com</p>
+              <h3 className="logo-text mb-5 title-impressive" style={{ fontSize: '2.5rem' }}>
+                Dónde Encontrarnos
+              </h3>
               
+              <div className="d-flex flex-column gap-4">
+                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="footer-contact-item fs-5">
+                  <i className="fa-solid fa-location-dot fs-3 me-4"></i> 
+                  <span>Calle de la Lana Mágica, 42. Madrid.</span>
+                </a>
+                <a href="tel:+34912345678" className="footer-contact-item fs-5">
+                  <i className="fa-solid fa-phone fs-3 me-4"></i>
+                  <span>+34 912 345 678</span>
+                </a>
+                <a href="mailto:hola@entrelanas.com" className="footer-contact-item fs-5">
+                  <i className="fa-regular fa-envelope fs-3 me-4"></i>
+                  <span>hola@entrelanas.com</span>
+                </a>
+              </div>
               
-              <div className="d-flex gap-3 mt-4">
-                <a href="#" className="btn rounded-circle border d-flex align-items-center justify-content-center nav-link-hover" style={{ width: '50px', height: '50px' }}>
-                  <i className="fa-brands fa-instagram fs-4 text-dark"></i>
+              <div className="d-flex gap-3 mt-5">
+                <a href="#" className="social-btn-premium">
+                  <i className="fa-brands fa-instagram fs-4"></i>
                 </a>
-                <a href="#" className="btn rounded-circle border d-flex align-items-center justify-content-center nav-link-hover" style={{ width: '50px', height: '50px' }}>
-                  <i className="fa-brands fa-facebook-f fs-4 text-dark"></i>
+                <a href="#" className="social-btn-premium">
+                  <i className="fa-brands fa-facebook-f fs-4"></i>
                 </a>
-                <a href="#" className="btn rounded-circle border d-flex align-items-center justify-content-center nav-link-hover" style={{ width: '50px', height: '50px' }}>
-                  <i className="fa-brands fa-tiktok fs-4 text-dark"></i>
+                <a href="#" className="social-btn-premium">
+                  <i className="fa-brands fa-tiktok fs-4"></i>
                 </a>
               </div>
             </div>
             
-            
             <div className="col-lg-6">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12149.610058252445!2d-3.7145763000000005!3d40.4180808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x422997b068da6c39%3A0x1d4d8c6b44747738!2sPuerta%20del%20Sol%2C%2020220%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses" 
-                className="w-100 shadow-sm"
-                height="300" 
-                style={{ border: 0, borderRadius: "20px" }} 
-                allowFullScreen="" 
-                loading="lazy"
-              ></iframe>
+              <div className="footer-map-shadow" style={{ borderRadius: "25px", overflow: 'hidden' }}>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12149.610058252445!2d-3.7145763000000005!3d40.4180808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x422997b068da6c39%3A0x1d4d8c6b44747738!2sPuerta%20del%20Sol%2C%2020220%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses" 
+                  className="w-100"
+                  height="400" 
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy"
+                ></iframe>
+              </div>
             </div>
 
           </div>

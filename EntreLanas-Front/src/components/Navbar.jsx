@@ -57,31 +57,33 @@ function Navbar() {
 
           <ul className="navbar-nav ms-auto align-items-center fw-medium text-dark gap-3">
             
-            {/* BOTÓN CATÁLOGO SIN FLECHA Y CON HOVER */}
+            {/* BOTÓN CATÁLOGO */}
             <li className="nav-item dropdown">
               <a className="nav-link text-dark dropdown-toggle no-arrow nav-link-hover px-3" href="#" data-bs-toggle="dropdown">
                 <i className="fa-solid fa-layer-group text-accent me-1"></i> Catálogo
               </a>
               <ul className="dropdown-menu shadow border-0 mt-2 border-radius-custom">
-                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=ROPA">👗 Ropa</Link></li>
-                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=MATERIAL">🧶 Material</Link></li>
-                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=AMIGURUMI">🧸 Amigurumis</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=ROPA">Ropa</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=MATERIAL">Material</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=AMIGURUMI">Amigurumis</Link></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li><Link className="dropdown-item nav-link-hover" to="/productos">Ver todo el catálogo</Link></li>
               </ul>
             </li>
 
+            {/* BOTÓN CARRITO (¡Ahora es idéntico al de catálogo!) */}
             {!esPaginaAuth && (
               <li className="nav-item">
-                <Link to="/carrito" className="nav-link text-dark d-flex align-items-center gap-2 rounded-pill px-3 border border-secondary border-opacity-25 nav-link-hover" onClick={handleCartClick}>
-                  <i className="fa-solid fa-cart-shopping"></i> Carrito
+                <Link to="/carrito" className="nav-link text-dark nav-link-hover d-flex align-items-center px-3" onClick={handleCartClick}>
+                  <i className="fa-solid fa-cart-shopping text-accent me-2"></i> Carrito
                   {cantidadTotal > 0 && user && (
-                    <span className="badge rounded-pill bg-accent">{cantidadTotal}</span>
+                    <span className="badge rounded-pill bg-accent shadow-sm ms-1">{cantidadTotal}</span>
                   )}
                 </Link>
               </li>
             )}
 
+            {/* SECCIÓN DE USUARIO / LOGIN */}
             {user ? (
               <>
                 <li className="nav-item d-none d-lg-block border-start mx-2" style={{ height: '20px', borderColor: 'var(--border-color)' }}></li>

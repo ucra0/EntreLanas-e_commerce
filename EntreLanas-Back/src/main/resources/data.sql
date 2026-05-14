@@ -1,11 +1,11 @@
 -- 1. USUARIOS DE PRUEBA (Contraseñas en texto plano "123")
-INSERT INTO usuarios (username, password, nombre, apellidos, email) VALUES 
-('admin', '123', 'Administrador', 'Jefe', 'admin@entrelanas.com'),
-('maria', '123', 'Maria', 'Tejedora', 'maria@gmail.com'),
-('pepe', '123', 'Pepe', 'Cliente', 'pepe@hotmail.com');
+INSERT INTO usuarios (username, password, nombre, apellidos, email, rol) VALUES 
+('admin', '123', 'Administrador', 'Jefe', 'admin@entrelanas.com', 'ROLE_ADMIN'),
+('maria', '123', 'Maria', 'Tejedora', 'maria@gmail.com', 'ROLE_USER'),
+('pepe', '123', 'Pepe', 'Cliente', 'pepe@hotmail.com', 'ROLE_USER');
 
 -- ==========================================
--- 👗 ROPA (categoria, color, talla, fibra, estilo)
+-- ROPA (categoria, color, talla, fibra, estilo)
 -- NOTA: tipo = NULL
 -- ==========================================
 INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
@@ -19,7 +19,7 @@ INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categ
 ('Suéter Deportivo', 'Prenda flexible que se adapta a los movimientos.', 39.99, 'EUR', '/imagenes/chaquetaNegraNailon.jpg', 18, 'ROPA', 'NEGRO', 'ADULTO', 'NAILON', 'REALISTA', NULL);
 
 -- ==========================================
--- 🧸 AMIGURUMI (categoria, color, fibra, estilo, tipo)
+-- AMIGURUMI (categoria, color, fibra, estilo, tipo)
 -- NOTA: talla = NULL
 -- ==========================================
 INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 
@@ -33,7 +33,7 @@ INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categ
 ('Solecito Brillante', 'Un llavero que ilumina hasta los días más nublados.', 6.50, 'EUR', '/imagenes/solecitoNaranjaLlavero.jpg', 50, 'AMIGURUMI', 'NARANJA', NULL, 'LANA', 'KAWAI', 'LLAVERO');
 
 -- ==========================================
--- 🧶 MATERIAL (categoria, color, fibra)
+-- MATERIAL (categoria, color, fibra)
 -- NOTA: talla, estilo y tipo = NULL
 -- ==========================================
 INSERT INTO productos (titulo, descripcion, precio, moneda, imagen, stock, categoria, color, talla, fibra, estilo, tipo) VALUES 

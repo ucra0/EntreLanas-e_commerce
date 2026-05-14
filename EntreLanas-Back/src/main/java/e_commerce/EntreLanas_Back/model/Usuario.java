@@ -1,5 +1,8 @@
 package e_commerce.EntreLanas_Back.model;
 
+import e_commerce.EntreLanas_Back.model.Enums.Rol;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import e_commerce.EntreLanas_Back.model.vo.Email;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -29,6 +32,9 @@ public class Usuario {
     @Embedded
     @AttributeOverride(name = "valor", column = @Column(name = "email", unique = true, nullable = false))
     private Email email;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false)
+    private Rol rol;
 
 
 
@@ -36,14 +42,15 @@ public class Usuario {
     }
 
 
-    public Usuario(Long usuario_id, String username, String password, String nombre, String apellidos, Email email) {
-        this.usuario_id = usuario_id;
-        this.username = username;
-        this.password = password;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.email = email;
-    }
+    public Usuario(Long usuario_id, String username, String password, String nombre, String apellidos, Email email, Rol rol) {
+    this.usuario_id = usuario_id;
+    this.username = username;
+    this.password = password;
+    this.nombre = nombre;
+    this.apellidos = apellidos;
+    this.email = email;
+    this.rol = rol;
+}
 
 
     public Long getUsuario_id() {
@@ -116,11 +123,20 @@ public class Usuario {
         this.email = email;
     }
 
+    public Rol getRol() {
+        return rol;
+    }
 
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
 
     @Override
     public String toString() {
-        return "Usuario [usuario_id=" + usuario_id + ", username=" + username + ", password=" + password + ", nombre="
-                + nombre + ", apellidos=" + apellidos + ", email=" + email + "]";
+    return "Usuario [usuario_id=" + usuario_id + ", username=" + username
+            + ", password=" + password + ", nombre=" + nombre
+            + ", apellidos=" + apellidos + ", email=" + email
+            + ", rol=" + rol + "]";
     }
 }

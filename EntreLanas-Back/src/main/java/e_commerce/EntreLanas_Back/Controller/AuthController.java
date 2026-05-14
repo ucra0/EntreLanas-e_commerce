@@ -22,21 +22,21 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registrar(@RequestBody RegistroDTO registroDTO) {
-        // --- DEBUG: IMPRIMIR LO QUE LLEGA ---
+        //  IMPRIMIR LO QUE LLEGA
         System.out.println(">>> INTENTO DE REGISTRO <<<");
         if (registroDTO == null) {
-            System.out.println("❌ ERROR: registroDTO es NULL (El JSON no ha llegado bien)");
+            System.out.println("ERROR: registroDTO es NULL (El JSON no ha llegado bien)");
             return ResponseEntity.badRequest().body("El cuerpo de la petición está vacío");
         }
         System.out.println("Username recibido: " + registroDTO.getUsername());
         System.out.println("Email recibido: " + registroDTO.getEmail());
-        // ------------------------------------
+        
 
         try {
             String mensaje = authService.registrarUsuario(registroDTO);
             return ResponseEntity.ok(mensaje);
         } catch (Exception e) {
-            e.printStackTrace(); // Imprime el error real en la consola negra
+            e.printStackTrace(); // Imprime el error en la consola 
             return ResponseEntity.badRequest().body("Error al registrar: " + e.getMessage());
         }
     }

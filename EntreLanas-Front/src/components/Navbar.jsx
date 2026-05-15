@@ -65,13 +65,14 @@ function Navbar() {
               <ul className="dropdown-menu shadow border-0 mt-2 border-radius-custom">
                 <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=ROPA">Ropa</Link></li>
                 <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=MATERIAL">Material</Link></li>
-                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=AMIGURUMI">Amigurumis</Link></li>
+                <li><Link className="dropdown-item fw-bold nav-link-hover" to="/productos?categoria=AMIGURUMI"> Amigurumis</Link></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li><Link className="dropdown-item nav-link-hover" to="/productos">Ver todo el catálogo</Link></li>
               </ul>
             </li>
+            
 
-            {/* BOTÓN CARRITO (¡Ahora es idéntico al de catálogo!) */}
+            {/* BOTÓN CARRITO  */}
             {!esPaginaAuth && (
               <li className="nav-item">
                 <Link to="/carrito" className="nav-link text-dark nav-link-hover d-flex align-items-center px-3" onClick={handleCartClick}>
@@ -95,8 +96,8 @@ function Navbar() {
                     onClick={handleLogout} 
                     className="btn btn-primary-accent btn-blanco-hover rounded-pill px-3 ms-2 shadow-sm d-flex align-items-center"
                   >
-                    <i className="fa-solid fa-arrow-right-from-bracket me-2"></i> 
-                      Salir
+                  <i className="fa-solid fa-arrow-right-from-bracket me-2"></i> 
+                    Salir
                   </button>
                 </li>
               </>

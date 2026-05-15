@@ -105,15 +105,15 @@ function Home() {
               <div className="d-flex flex-column gap-4">
                 <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="footer-contact-item fs-5">
                   <i className="fa-solid fa-location-dot fs-3 me-4"></i> 
-                  <span>Calle de la Lana Mágica, 42. Madrid.</span>
-                </a>
+                  <span>Calle de la Lana Mágica, 42. A Coruña.</span>
+                </a>  
                 <a href="tel:+34912345678" className="footer-contact-item fs-5">
                   <i className="fa-solid fa-phone fs-3 me-4"></i>
                   <span>+34 912 345 678</span>
                 </a>
                 <a href="mailto:hola@entrelanas.com" className="footer-contact-item fs-5">
                   <i className="fa-regular fa-envelope fs-3 me-4"></i>
-                  <span>hola@entrelanas.com</span>
+                  <span>entrelanas@gmail.com</span>
                 </a>
               </div>
               

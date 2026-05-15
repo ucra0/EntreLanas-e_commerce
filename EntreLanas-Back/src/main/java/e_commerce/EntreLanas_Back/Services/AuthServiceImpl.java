@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import e_commerce.EntreLanas_Back.dtos.LoginDTO;
 import e_commerce.EntreLanas_Back.dtos.RegistroDTO;
+import e_commerce.EntreLanas_Back.dtos.UsuarioResponseDTO;
 import e_commerce.EntreLanas_Back.model.Usuario;
+import e_commerce.EntreLanas_Back.model.Enums.Rol;
 import e_commerce.EntreLanas_Back.model.vo.Email;
 import e_commerce.EntreLanas_Back.repositories.UsuarioRepository;
 
@@ -38,7 +40,8 @@ public class AuthServiceImpl implements AuthService {
         usuario.setPassword(dto.getPassword());
         usuario.setNombre(dto.getNombre());
         usuario.setApellidos(dto.getApellidos());
-        
+        usuario.setRol(Rol.ROLE_USER);
+
         try {
             usuario.setEmail(new Email(dto.getEmail()));
         } catch (Exception e) {
@@ -51,17 +54,28 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Usuario login(LoginDTO loginDTO) {
-        // USAMOS EL NUEVO REPO
+    public UsuarioResponseDTO login(LoginDTO loginDTO) {
+
         Optional<Usuario> userOpt = usuarioRepo.findByUsername(loginDTO.getUsername());
-        
+
         if (userOpt.isEmpty()) {
             throw new RuntimeException("Usuario no encontrado en BD");
         }
+
         Usuario usuario = userOpt.get();
+
         if (!usuario.getPassword().equals(loginDTO.getPassword())) {
             throw new RuntimeException("Contraseña incorrecta");
         }
-        return usuario;
+
+        
+        return new UsuarioResponseDTO(
+            usuario.getUsuario_id(),
+            usuario.getUsername(),
+            usuario.getNombre(),
+            usuario.getApellidos(),
+            usuario.getEmail().getValor(), 
+            usuario.getRol()
+        );
     }
 }

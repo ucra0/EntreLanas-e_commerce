@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import e_commerce.EntreLanas_Back.Services.AuthService;
 import e_commerce.EntreLanas_Back.dtos.LoginDTO;
 import e_commerce.EntreLanas_Back.dtos.RegistroDTO;
-import e_commerce.EntreLanas_Back.model.Usuario;
+import e_commerce.EntreLanas_Back.dtos.UsuarioResponseDTO;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,7 +45,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         System.out.println(">>> INTENTO DE LOGIN <<<");
         try {
-            Usuario usuarioLogueado = authService.login(loginDTO);
+            UsuarioResponseDTO usuarioLogueado = authService.login(loginDTO);
             return ResponseEntity.ok(usuarioLogueado);
         } catch (Exception e) {
             e.printStackTrace();

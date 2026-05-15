@@ -1,6 +1,10 @@
 package e_commerce.EntreLanas_Back.model;
 
+import e_commerce.EntreLanas_Back.model.vo.Dinero;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,15 +33,19 @@ public class LineaPedido {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "precio_unitario", nullable = false)
-    private Double precioUnitario;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "importe", column = @Column(name = "precio_unitario", nullable = false, scale = 2)),
+        @AttributeOverride(name = "moneda", column = @Column(name = "moneda_unitario", nullable = false, length = 3))
+    })
+    private Dinero precioUnitario;
 
 
     public LineaPedido() {
     }
 
     public LineaPedido(Long linea_id, Pedido pedido, Producto producto,
-                       Integer cantidad, Double precioUnitario) {
+                       Integer cantidad, Dinero precioUnitario) {
         this.linea_id = linea_id;
         this.pedido = pedido;
         this.producto = producto;
@@ -78,11 +86,11 @@ public class LineaPedido {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioUnitario() {
+    public Dinero getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(Dinero precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 

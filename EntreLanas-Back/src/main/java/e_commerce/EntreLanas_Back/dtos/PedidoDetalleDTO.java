@@ -2,10 +2,11 @@ package e_commerce.EntreLanas_Back.dtos;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import e_commerce.EntreLanas_Back.model.Enums.EstadoPedido;
 
-public class PedidoResumenDTO {
+public class PedidoDetalleDTO {
 
     private Long pedido_id;
     private Long usuario_id;
@@ -13,19 +14,22 @@ public class PedidoResumenDTO {
     private BigDecimal precioTotal;
     private String moneda;
     private EstadoPedido estado;
+    private List<LineaPedidoDTO> lineas;
 
 
-    public PedidoResumenDTO() {
+    public PedidoDetalleDTO() {
     }
 
-    public PedidoResumenDTO(Long pedido_id, Long usuario_id, LocalDateTime fechaPedido,
-                            BigDecimal precioTotal, String moneda, EstadoPedido estado) {
+    public PedidoDetalleDTO(Long pedido_id, Long usuario_id, LocalDateTime fechaPedido,
+                            BigDecimal precioTotal, String moneda, EstadoPedido estado,
+                            List<LineaPedidoDTO> lineas) {
         this.pedido_id = pedido_id;
         this.usuario_id = usuario_id;
         this.fechaPedido = fechaPedido;
         this.precioTotal = precioTotal;
         this.moneda = moneda;
         this.estado = estado;
+        this.lineas = lineas;
     }
 
 
@@ -75,5 +79,13 @@ public class PedidoResumenDTO {
 
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
+    }
+
+    public List<LineaPedidoDTO> getLineas() {
+        return lineas;
+    }
+
+    public void setLineas(List<LineaPedidoDTO> lineas) {
+        this.lineas = lineas;
     }
 }

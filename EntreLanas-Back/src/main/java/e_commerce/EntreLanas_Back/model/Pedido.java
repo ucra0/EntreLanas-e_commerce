@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import e_commerce.EntreLanas_Back.model.Enums.EstadoPedido;
+import e_commerce.EntreLanas_Back.model.vo.Dinero;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,8 +38,12 @@ public class Pedido {
     @Column(name = "fecha_pedido", nullable = false)
     private LocalDateTime fechaPedido;
 
-    @Column(name = "precio_total", nullable = false)
-    private Double precioTotal;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "importe", column = @Column(name = "precio_total", nullable = false, scale = 2)),
+        @AttributeOverride(name = "moneda", column = @Column(name = "moneda_total", nullable = false, length = 3))
+    })
+    private Dinero precioTotal;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
@@ -49,7 +57,7 @@ public class Pedido {
     }
 
     public Pedido(Long pedido_id, Usuario usuario, LocalDateTime fechaPedido,
-                  Double precioTotal, EstadoPedido estado) {
+                  Dinero precioTotal, EstadoPedido estado) {
         this.pedido_id = pedido_id;
         this.usuario = usuario;
         this.fechaPedido = fechaPedido;
@@ -82,11 +90,11 @@ public class Pedido {
         this.fechaPedido = fechaPedido;
     }
 
-    public Double getPrecioTotal() {
+    public Dinero getPrecioTotal() {
         return precioTotal;
     }
 
-    public void setPrecioTotal(Double precioTotal) {
+    public void setPrecioTotal(Dinero precioTotal) {
         this.precioTotal = precioTotal;
     }
 

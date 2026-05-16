@@ -9,6 +9,7 @@ import { CartProvider } from './context/CartContext';
 import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
+import MisPedidos from './pages/MisPedidos';
 
 
 function App() {
@@ -27,14 +28,11 @@ function App() {
           
           <Routes>
           
-            
             <Route path="/" element={<Home />} />
 
             <Route path="/productos" element={<Productos />} />
           
-            
             <Route path="/login" element={<Login />} />
-          
             
             {<Route path="/registro" element={<Register />} />}
 
@@ -44,6 +42,7 @@ function App() {
 
             <Route path="/checkout" element={<Checkout />} />
 
+            <Route path="/mis-pedidos" element={<MisPedidos />} />
             
             <Route path="*" element={<Home />} />
 

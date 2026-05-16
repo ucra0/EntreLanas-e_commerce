@@ -92,6 +92,11 @@ function Navbar() {
                   <span className="text-muted me-2">Hola, {user.nombre}</span>
                 </li>
                 <li className="nav-item">
+                  <li className="nav-item">
+                      <Link className="nav-link text-dark nav-link-hover px-3" to="/mis-pedidos">
+                        <i className="fa-solid fa-box-open text-accent me-1"></i> Mis pedidos
+                      </Link>
+                    </li>
                   <button 
                     onClick={handleLogout} 
                     className="btn btn-primary-accent btn-blanco-hover rounded-pill px-3 ms-2 shadow-sm d-flex align-items-center"

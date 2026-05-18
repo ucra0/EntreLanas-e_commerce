@@ -24,7 +24,7 @@ function Login() {
       const res = await axios.post('http://localhost:8080/api/auth/login', formData);
       setCarrito([]); 
       login(res.data);
-      navigate('/');
+      navigate(res.data.rol === 'ROLE_ADMIN' ? '/admin/productos' : '/');
     } catch (err) {
       console.error(err);
       if (err.response && err.response.data) {

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
 // ─────────────────────────────────────────────────────────
-const PAYPAL_CLIENT_ID = 'AcG-5lpphpt0EzvsVU57fZJd2gjZVmtFUKwQF7BTUao6rR3srgMBH6fmzYgpqPV-c_v1KAOWUSCfGkIa'; // Client ID real de PayPal
+const PAYPAL_CLIENT_ID ='Acay-VE2IwSyQgudtkVJR9N-EdxoZ0yYY-TUFsBHX7aZM1RTK-QBGCzU_qnD2aJXVqwzu0-j7kM5o622'; // Client ID real de PayPal
 // ─────────────────────────────────────────────────────────
 
 const PAISES = [
@@ -277,7 +277,7 @@ function Checkout() {
                             createOrder={(data, actions) => actions.order.create({
                                 purchase_units: [{
                                     amount: {
-                                    value: total.toFixed(2),
+                                    value: String(parseFloat(total).toFixed(2)),
                                     currency_code: 'EUR',
                                 },
                                 description: `Pedido EntreLanas — ${carrito.length} artículo(s)`,

@@ -10,6 +10,8 @@ import Cart from './pages/Cart';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import MisPedidos from './pages/MisPedidos';
+import AdminLayout from './pages/AdminLayout';
+import AdminProductos from './pages/AdminProductos';
 
 
 function App() {
@@ -43,6 +45,17 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
 
             <Route path="/mis-pedidos" element={<MisPedidos />} />
+
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={
+                <div className="text-center py-5">
+                  <h2 className="logo-text">Bienvenido al Panel de Administración</h2>
+                </div>
+              }/>
+              <Route path="productos" element={<AdminProductos />} />
+              <Route path="pedidos"   element={<div className="text-muted text-center py-5">Sección Pedidos — próximamente</div>} />
+              <Route path="usuarios"  element={<div className="text-muted text-center py-5">Sección Usuarios — próximamente</div>} />
+            </Route>
             
             <Route path="*" element={<Home />} />
 

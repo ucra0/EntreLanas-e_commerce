@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
@@ -14,11 +15,18 @@ import AdminLayout from './pages/AdminLayout';
 import AdminInicio from './pages/AdminInicio';
 import AdminProductos from './pages/AdminProductos';
 import AdminPedidos from './pages/AdminPedidos';
+import AdminUsuarios from './pages/AdminUsuarios';
 
 // Componente intermedio que puede usar useLocation (requiere estar dentro de BrowserRouter)
 function AppContent() {
   const location = useLocation();
+  const { user } = useAuth();
   const esAdmin = location.pathname.startsWith('/admin');
+  
+  // Si es admin y está en una ruta que no es /admin, redirigir al panel
+  if (user?.rol === 'ROLE_ADMIN' && !esAdmin) {
+    return <Navigate to="/admin" replace />;
+  }
 
   return (
     <>
@@ -40,7 +48,7 @@ function AppContent() {
           <Route index element={<AdminInicio />} />
           <Route path="productos" element={<AdminProductos />} />
           <Route path="pedidos" element={<AdminPedidos />} />
-          <Route path="usuarios"  element={<div className="text-muted text-center py-5">Usuarios — próximamente</div>} />
+          <Route path="usuarios" element={<AdminUsuarios />} />
         </Route>
 
         {/* Ruta catch-all */}

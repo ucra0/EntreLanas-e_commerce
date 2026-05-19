@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import e_commerce.EntreLanas_Back.dtos.UsuarioResponseDTO;
 import e_commerce.EntreLanas_Back.model.Usuario;
 import e_commerce.EntreLanas_Back.model.Enums.Rol;
+import e_commerce.EntreLanas_Back.repositories.PedidoRepository;
 import e_commerce.EntreLanas_Back.repositories.UsuarioRepository;
 
 @Service
@@ -16,6 +17,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @Autowired
+    private PedidoRepository pedidoRepo;
 
     @Override
     public List<UsuarioResponseDTO> listarTodos() {
@@ -50,13 +54,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     // Reutilizamos el UsuarioResponseDTO que ya tienes
     private UsuarioResponseDTO toDTO(Usuario u) {
-        return new UsuarioResponseDTO(
-            u.getUsuario_id(),
-            u.getUsername(),
-            u.getNombre(),
-            u.getApellidos(),
-            u.getEmail().getValor(),
-            u.getRol()
-        );
-    }
+    int numeroPedidos = pedidoRepo.findByUsuarioId(u.getUsuario_id()).size();
+    return new UsuarioResponseDTO(
+        u.getUsuario_id(),
+        u.getUsername(),
+        u.getNombre(),
+        u.getApellidos(),
+        u.getEmail().getValor(),
+        u.getRol(),
+        numeroPedidos
+    );
+}
 }

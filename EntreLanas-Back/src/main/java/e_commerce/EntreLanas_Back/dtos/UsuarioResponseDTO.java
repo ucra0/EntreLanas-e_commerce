@@ -10,19 +10,33 @@ public class UsuarioResponseDTO {
     private String apellidos;
     private String email;
     private Rol rol;
+    private int numeroPedidos;
 
 
     public UsuarioResponseDTO() {
     }
 
-    public UsuarioResponseDTO(Long usuario_id, String username, String nombre,
-                               String apellidos, String email, Rol rol) {
+    // Constructor de 6 — usado en login (sin contar pedidos)
+    public UsuarioResponseDTO(Long usuario_id, String username, String nombre, String apellidos, String email, Rol rol) {
         this.usuario_id = usuario_id;
         this.username = username;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
         this.rol = rol;
+        this.numeroPedidos = 0;
+    }
+
+    // Constructor de 7 — usado en el panel admin (con conteo de pedidos)
+    public UsuarioResponseDTO(Long usuario_id, String username, String nombre,
+                               String apellidos, String email, Rol rol, int numeroPedidos) {
+        this.usuario_id = usuario_id;
+        this.username = username;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.rol = rol;
+        this.numeroPedidos = numeroPedidos;
     }
 
 
@@ -72,5 +86,15 @@ public class UsuarioResponseDTO {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+
+    public int getNumeroPedidos() {
+        return numeroPedidos;
+    }
+
+
+    public void setNumeroPedidos(int numeroPedidos) {
+        this.numeroPedidos = numeroPedidos;
     }
 }

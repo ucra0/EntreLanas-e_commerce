@@ -13,6 +13,7 @@ import MisPedidos from './pages/MisPedidos';
 import AdminLayout from './pages/AdminLayout';
 import AdminInicio from './pages/AdminInicio';
 import AdminProductos from './pages/AdminProductos';
+import AdminPedidos from './pages/AdminPedidos';
 
 // Componente intermedio que puede usar useLocation (requiere estar dentro de BrowserRouter)
 function AppContent() {
@@ -38,7 +39,7 @@ function AppContent() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminInicio />} />
           <Route path="productos" element={<AdminProductos />} />
-          <Route path="pedidos"   element={<div className="text-muted text-center py-5">Pedidos — próximamente</div>} />
+          <Route path="pedidos" element={<AdminPedidos />} />
           <Route path="usuarios"  element={<div className="text-muted text-center py-5">Usuarios — próximamente</div>} />
         </Route>
 

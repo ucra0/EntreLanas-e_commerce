@@ -18,6 +18,8 @@ import AdminPedidos from './pages/AdminPedidos';
 import AdminUsuarios from './pages/AdminUsuarios';
 import { FavoritosProvider } from './context/FavoritosContext';
 import MisFavoritos from './pages/MisFavoritos';
+import { ListaDeseosProvider } from './context/ListaDeseosContext';
+import MisDeseos from './pages/MisDeseos';
 
 // Componente intermedio que puede usar useLocation (requiere estar dentro de BrowserRouter)
 function AppContent() {
@@ -45,6 +47,7 @@ function AppContent() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/mis-pedidos" element={<MisPedidos />} />
         <Route path="/mis-favoritos" element={<MisFavoritos />} />
+        <Route path="/mis-deseos" element={<MisDeseos />} />
 
         {/* Rutas del panel de administración */}
         <Route path="/admin" element={<AdminLayout />}>
@@ -65,10 +68,12 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <FavoritosProvider> 
-          <BrowserRouter>
-            <AppContent />
-          </BrowserRouter>
+        <FavoritosProvider>
+           <ListaDeseosProvider>
+              <BrowserRouter>
+                <AppContent />
+              </BrowserRouter>
+          </ListaDeseosProvider> 
         </FavoritosProvider>  
       </CartProvider>
     </AuthProvider>

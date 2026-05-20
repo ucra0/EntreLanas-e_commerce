@@ -4,24 +4,32 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useFavoritos } from '../context/FavoritosContext';
+import { useListaDeseos } from '../context/ListaDeseosContext';
 
 function ProductDetail() {
   const { id } = useParams();
-  const [producto, setProducto] = useState(null);
-  const [loading, setLoading]   = useState(true);
+  const [producto, setProducto]   = useState(null);
+  const [loading, setLoading]     = useState(true);
   const [showToast, setShowToast] = useState(false);
-  const [toastFav, setToastFav]   = useState(false); 
+  const [toastMsg, setToastMsg]   = useState({ texto: '', icono: 'fa-circle-check' });
 
-  const { user }                      = useAuth();
-  const { addToCart }                 = useCart();
-  const { esFavorito, toggleFavorito } = useFavoritos();
-  const navigate                      = useNavigate();
+  const { user }                          = useAuth();
+  const { addToCart }                     = useCart();
+  const { esFavorito, toggleFavorito }    = useFavoritos();
+  const { esDeseo, toggleDeseo }          = useListaDeseos();
+  const navigate                          = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/productos/${id}`)
       .then(res => { setProducto(res.data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });
   }, [id]);
+
+  const mostrarToast = (texto, icono = 'fa-circle-check') => {
+    setToastMsg({ texto, icono });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   if (loading) return (
     <div className="flex-grow-1 d-flex justify-content-center align-items-center min-vh-100">
@@ -45,11 +53,14 @@ function ProductDetail() {
     </div>
   );
 
+  const sinStock     = producto.stock === 0;
+  const yaEsFavorito = esFavorito(producto.id);
+  const yaEsDeseo    = esDeseo(producto.id);
+
   const handleAddToCart = () => {
     if (user) {
       addToCart(producto);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+      mostrarToast('¡Añadido al carrito con éxito!', 'fa-circle-check');
     } else {
       navigate('/login');
     }
@@ -58,32 +69,29 @@ function ProductDetail() {
   const handleToggleFavorito = () => {
     if (!user) { navigate('/login'); return; }
     toggleFavorito(producto.id);
-    setToastFav(true);
-    setTimeout(() => setToastFav(false), 2500);
+    mostrarToast(
+      yaEsFavorito ? 'Eliminado de favoritos' : '¡Añadido a favoritos!',
+      'fa-heart'
+    );
   };
 
-  const yaEsFavorito = esFavorito(producto.id);
+  const handleToggleDeseo = () => {
+    if (!user) { navigate('/login'); return; }
+    toggleDeseo(producto.id);
+    mostrarToast(
+      yaEsDeseo ? 'Eliminado de tu lista de deseos' : '¡Guardado en tu lista de deseos!',
+      'fa-star'
+    );
+  };
 
   return (
     <div className="flex-grow-1 py-5 position-relative">
 
-      {/* Toast carrito */}
+      {/* Toast */}
       {showToast && (
         <div className="toast-premium">
-          <i className="fa-solid fa-circle-check"></i>
-          <span>¡Añadido al carrito con éxito!</span>
-        </div>
-      )}
-
-      {/* Toast favorito */}
-      {toastFav && (
-        <div className="toast-premium" style={{ backgroundColor: yaEsFavorito ? '#c0392b' : '#2C2A29' }}>
-          <i className={`fa-${yaEsFavorito ? 'solid' : 'regular'} fa-heart`}></i>
-          <span>
-            {yaEsFavorito
-              ? '¡Añadido a tus favoritos!'
-              : 'Eliminado de tus favoritos'}
-          </span>
+          <i className={`fa-solid ${toastMsg.icono}`}></i>
+          <span>{toastMsg.texto}</span>
         </div>
       )}
 
@@ -106,19 +114,29 @@ function ProductDetail() {
                 {producto.categoria?.toLowerCase()}
               </span>
 
-              {producto.stock < 15 && (
+              {sinStock ? (
+                <span className="position-absolute badge text-white rounded-pill shadow-sm"
+                  style={{ top: '1.5rem', right: '1.5rem', zIndex: 10,
+                           backgroundColor: '#6c757d', fontSize: '0.9rem', padding: '0.5em 1em' }}>
+                  <i className="fa-solid fa-xmark me-1"></i> Sin stock
+                </span>
+              ) : producto.stock < 15 ? (
                 <span className="position-absolute badge bg-danger text-white rounded-pill shadow-sm"
                   style={{ top: '1.5rem', right: '1.5rem', zIndex: 10, fontSize: '0.9rem', padding: '0.5em 1em' }}>
                   <i className="fa-solid fa-fire me-1"></i> ¡Solo quedan {producto.stock}!
                 </span>
-              )}
+              ) : null}
 
               <img
                 src={producto.imagen?.startsWith('http') || producto.imagen?.startsWith('/')
                   ? producto.imagen : `/${producto.imagen}`}
                 alt={producto.titulo}
                 className="w-100"
-                style={{ objectFit: 'cover', maxHeight: '600px', borderRadius: '15px', aspectRatio: '4/5' }}
+                style={{
+                  objectFit: 'cover', maxHeight: '600px',
+                  borderRadius: '15px', aspectRatio: '4/5',
+                  filter: sinStock ? 'grayscale(20%)' : 'none',
+                }}
               />
             </div>
           </div>
@@ -143,37 +161,71 @@ function ProductDetail() {
             </div>
 
             <p className="lead text-muted mb-5" style={{ lineHeight: '1.8' }}>
-              {producto.descripcion || 'Un producto artesanal único, tejido con amor y dedicación. Cada puntada cuenta una historia, ideal para regalar o darte un capricho merecido.'}
+              {producto.descripcion || 'Un producto artesanal único, tejido con amor y dedicación.'}
             </p>
 
-            {/* Botones acción */}
+            {/* Botones según stock */}
             <div className="d-flex gap-3 flex-wrap mb-5">
-              {/* Añadir al carrito */}
-              <button
-                onClick={handleAddToCart}
-                className={`btn btn-lg rounded-pill px-5 py-3 fs-5 shadow-sm flex-grow-1
-                  ${user ? 'btn-primary-accent' : 'btn-outline-accent'}`}
-              >
-                {user
-                  ? <><i className="fa-solid fa-cart-plus me-2"></i> Añadir al carrito</>
-                  : <><i className="fa-solid fa-lock me-2"></i> Iniciar sesión para comprar</>}
-              </button>
 
-              {/* Botón favorito */}
-              <button
-                onClick={handleToggleFavorito}
-                className="btn btn-lg rounded-pill px-4 py-3 shadow-sm"
-                style={{
-                  backgroundColor: yaEsFavorito ? '#fdecea' : 'white',
-                  border: `2px solid ${yaEsFavorito ? '#e74c3c' : '#dee2e6'}`,
-                  color: yaEsFavorito ? '#e74c3c' : '#aaa',
-                  transition: '0.2s',
-                  minWidth: '60px',
-                }}
-                title={yaEsFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-              >
-                <i className={`${yaEsFavorito ? 'fa-solid' : 'fa-regular'} fa-heart fa-lg`}></i>
-              </button>
+              {sinStock ? (
+                /* Sin stock — botón lista de deseos + favorito */
+                <>
+                  <button
+                    onClick={handleToggleDeseo}
+                    className="btn btn-lg rounded-pill px-5 py-3 fs-5 shadow-sm flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+                    style={{
+                      backgroundColor: yaEsDeseo ? '#fff9e6' : 'white',
+                      border: `2px solid ${yaEsDeseo ? 'var(--accent-color, #c9a87c)' : '#dee2e6'}`,
+                      color: yaEsDeseo ? 'var(--accent-color, #c9a87c)' : '#6c757d',
+                      transition: '0.2s',
+                    }}
+                  >
+                    <i className={`${yaEsDeseo ? 'fa-solid' : 'fa-regular'} fa-star fa-lg`}></i>
+                    <span>{yaEsDeseo ? 'En tu lista de deseos' : 'Añadir a lista de deseos'}</span>
+                  </button>
+
+                  <button
+                    onClick={handleToggleFavorito}
+                    className="btn btn-lg rounded-pill px-4 py-3 shadow-sm"
+                    style={{
+                      backgroundColor: yaEsFavorito ? '#fdecea' : 'white',
+                      border: `2px solid ${yaEsFavorito ? '#e74c3c' : '#dee2e6'}`,
+                      color: yaEsFavorito ? '#e74c3c' : '#aaa',
+                      transition: '0.2s', minWidth: '60px',
+                    }}
+                    title={yaEsFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+                  >
+                    <i className={`${yaEsFavorito ? 'fa-solid' : 'fa-regular'} fa-heart fa-lg`}></i>
+                  </button>
+                </>
+              ) : (
+                /* Con stock — botón carrito + favorito */
+                <>
+                  <button
+                    onClick={handleAddToCart}
+                    className={`btn btn-lg rounded-pill px-5 py-3 fs-5 shadow-sm flex-grow-1
+                      ${user ? 'btn-primary-accent' : 'btn-outline-accent'}`}
+                  >
+                    {user
+                      ? <><i className="fa-solid fa-cart-plus me-2"></i> Añadir al carrito</>
+                      : <><i className="fa-solid fa-lock me-2"></i> Iniciar sesión para comprar</>}
+                  </button>
+
+                  <button
+                    onClick={handleToggleFavorito}
+                    className="btn btn-lg rounded-pill px-4 py-3 shadow-sm"
+                    style={{
+                      backgroundColor: yaEsFavorito ? '#fdecea' : 'white',
+                      border: `2px solid ${yaEsFavorito ? '#e74c3c' : '#dee2e6'}`,
+                      color: yaEsFavorito ? '#e74c3c' : '#aaa',
+                      transition: '0.2s', minWidth: '60px',
+                    }}
+                    title={yaEsFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+                  >
+                    <i className={`${yaEsFavorito ? 'fa-solid' : 'fa-regular'} fa-heart fa-lg`}></i>
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Características */}
@@ -200,6 +252,7 @@ function ProductDetail() {
                 <span>Envío seguro a <strong>toda España</strong></span>
               </li>
             </ul>
+
           </div>
         </div>
       </div>

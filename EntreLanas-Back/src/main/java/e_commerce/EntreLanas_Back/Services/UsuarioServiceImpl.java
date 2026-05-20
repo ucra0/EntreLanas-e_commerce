@@ -54,15 +54,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     // Reutilizamos el UsuarioResponseDTO que ya tienes
     private UsuarioResponseDTO toDTO(Usuario u) {
-    int numeroPedidos = pedidoRepo.findByUsuarioId(u.getUsuario_id()).size();
-    return new UsuarioResponseDTO(
-        u.getUsuario_id(),
-        u.getUsername(),
-        u.getNombre(),
-        u.getApellidos(),
-        u.getEmail().getValor(),
-        u.getRol(),
-        numeroPedidos
-    );
-}
+        int numeroPedidos = pedidoRepo.findByUsuarioId(u.getUsuario_id()).size();
+        return new UsuarioResponseDTO(
+            u.getUsuario_id(),
+            u.getUsername(),
+            u.getNombre(),
+            u.getApellidos(),
+            u.getEmail().getValor(),
+            u.getRol(),
+            numeroPedidos
+        );
+    }
 }

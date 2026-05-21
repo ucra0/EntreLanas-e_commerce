@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useSearchParams } from 'react-router-dom';
+import usePageTitle from '../hooks/usePageTitle';
+
 
 function Productos() {
+  usePageTitle('Catálogo');
   const [productos, setProductos] = useState([]);
   const [searchParams] = useSearchParams();
 

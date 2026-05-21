@@ -154,7 +154,7 @@ function Productos() {
             </div>
           </div>
 
-          {/* Grid productos — sin botón de favoritos */}
+          {/* Grid productos */}
           <div className="col-lg-9">
             {productosFiltrados.length === 0 ? (
               <div className="text-center py-5 card-premium">
@@ -176,12 +176,18 @@ function Productos() {
                         {prod.categoria?.toLowerCase()}
                       </span>
 
-                      {prod.stock < 20 && (
+                      {prod.stock === 0 ? (
+                        <span className="position-absolute badge text-white rounded-pill shadow-sm"
+                          style={{ top: '1.5rem', right: '1.5rem', zIndex: 10,
+                            backgroundColor: '#6c757d', fontSize: '0.85rem', padding: '0.5em 1em' }}>
+                          <i className="fa-solid fa-xmark me-1"></i> Agotado
+                        </span>
+                      ) : prod.stock < 20 ? (
                         <span className="position-absolute badge bg-danger text-white rounded-pill shadow-sm"
                           style={{ top: '1.5rem', right: '1.5rem', zIndex: 10 }}>
                           ¡Solo {prod.stock}!
                         </span>
-                      )}
+                      ) : null}
 
                       <div className="card-img-premium">
                         <img src={prod.imagen} alt={prod.titulo} />

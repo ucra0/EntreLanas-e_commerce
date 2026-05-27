@@ -433,7 +433,7 @@ function AdminProductos() {
                   {/* Preview imagen */}
                   {productoActual.imagen && (
                     <div className="text-center mb-2">
-                      <p className="text-muted small mb-2">Vista previa:</p>
+                      <p className="text-muted small mb-2">Vista previa</p>
                       <img
                         src={productoActual.imagen?.startsWith('http') || productoActual.imagen?.startsWith('/')
                           ? productoActual.imagen : `/${productoActual.imagen}`}

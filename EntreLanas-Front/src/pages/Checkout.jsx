@@ -286,13 +286,6 @@ function Checkout() {
       <div className="flex-grow-1 py-5">
         <div className="container py-lg-4" style={{ maxWidth: '1100px' }}>
 
-          <div className="mb-5 text-center">
-            <Link to="/" className="text-decoration-none">
-              <h1 className="logo-text fs-2 text-dark">
-                <i className="fa-solid fa-cookie-bite text-accent me-2"></i> EntreLanas
-              </h1>
-            </Link>
-          </div>
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="row gap-5 gap-lg-0 align-items-start">

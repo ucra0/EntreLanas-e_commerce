@@ -356,13 +356,13 @@ function AdminProductos() {
                   {/* Título + Categoría */}
                   <div className="row g-3 mb-3">
                     <div className="col-8">
-                      <label className="form-label fw-semibold small">Título *</label>
+                      <label className="form-label fw-semibold small">Título</label>
                       <input type="text" name="titulo" className="form-control rounded-3"
                         placeholder="Nombre del producto"
                         value={productoActual.titulo} onChange={handleCampo} required />
                     </div>
                     <div className="col-4">
-                      <label className="form-label fw-semibold small">Categoría *</label>
+                      <label className="form-label fw-semibold small">Categoría</label>
                       <select name="categoria" className="form-select rounded-3"
                         value={productoActual.categoria} onChange={handleCampo}>
                         {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
@@ -372,7 +372,7 @@ function AdminProductos() {
 
                   {/* Descripción */}
                   <div className="mb-3">
-                    <label className="form-label fw-semibold small">Descripción *</label>
+                    <label className="form-label fw-semibold small">Descripción</label>
                     <textarea name="descripcion" className="form-control rounded-3" rows={3}
                       placeholder="Describe el producto..."
                       value={productoActual.descripcion} onChange={handleCampo} required />
@@ -381,7 +381,7 @@ function AdminProductos() {
                   {/* Precio + Stock + Imagen */}
                   <div className="row g-3 mb-3">
                     <div className="col-4">
-                      <label className="form-label fw-semibold small">Precio *</label>
+                      <label className="form-label fw-semibold small">Precio</label>
                       <div className="input-group">
                         <input type="number" name="importe" className="form-control rounded-start-3"
                           placeholder="0.00" step="0.01" min="0"
@@ -390,13 +390,13 @@ function AdminProductos() {
                       </div>
                     </div>
                     <div className="col-3">
-                      <label className="form-label fw-semibold small">Stock *</label>
+                      <label className="form-label fw-semibold small">Stock</label>
                       <input type="number" name="stock" className="form-control rounded-3"
                         placeholder="0" min="0"
                         value={productoActual.stock} onChange={handleCampo} required />
                     </div>
                     <div className="col-5">
-                      <label className="form-label fw-semibold small">Imagen (ruta) *</label>
+                      <label className="form-label fw-semibold small">Imagen (ruta)</label>
                       <input type="text" name="imagen" className="form-control rounded-3"
                         placeholder="/imagenes/producto.jpg"
                         value={productoActual.imagen} onChange={handleCampo} required />

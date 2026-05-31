@@ -1,157 +1,170 @@
-# 🧶 EntreLanas - E-commerce de Productos Artesanales
+# EntreLanas — E-commerce de Artesanía
 
-Bienvenido a **EntreLanas**, una aplicación web completa (Full Stack) para la gestión y venta de productos artesanales de lana. Este proyecto permite a los usuarios registrarse, explorar un catálogo de productos, gestionar un carrito de compras y simular pedidos.
+Proyecto Final de Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Web (DAW).
 
-La aplicación está dividida en dos partes principales:
-- **Backend:** Desarrollado con Java y Spring Boot (API REST).
-- **Frontend:** Desarrollado con React, Vite y Bootstrap (Interfaz de usuario).
+EntreLanas es una tienda online de productos artesanales de ganchillo, amigurumis y mercería, desarrollada como aplicación web full stack con arquitectura cliente-servidor.
 
 ---
 
-## 📋 Requisitos Previos
+## Tecnologías utilizadas
 
-Para ejecutar este proyecto en tu ordenador, necesitas tener instalado el siguiente software. No te preocupes si no conoces estas herramientas, sigue los enlaces para instalarlas:
+### Backend
+- Java 21
+- Spring Boot
+- Spring Data JPA / Hibernate
+- MySQL 8
+- JavaMailSender (SMTP Gmail)
 
-1.  **Java JDK 21 (o 17):** Necesario para ejecutar el Backend.
-    * [Descargar JDK 21](https://www.oracle.com/java/technologies/downloads/#java21)
-2.  **Node.js (Versión LTS):** Necesario para ejecutar el Frontend.
-    * [Descargar Node.js](https://nodejs.org/es/)
-3.  **MySQL Server:** La base de datos donde se guardará la información.
-    * [Descargar MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-    * *Nota:* Durante la instalación, recuerda la contraseña que le pongas al usuario `root`.
-4.  **Un Editor de Código:** Recomendamos **Visual Studio Code**.
-    * [Descargar VS Code](https://code.visualstudio.com/)
-
----
-
-## 🚀 Guía de Instalación y Ejecución Paso a Paso
-
-Sigue estos pasos en orden para poner en marcha la aplicación.
-
-### PASO 1: Configuración de la Base de Datos
-
-Antes de arrancar nada, necesitamos crear la base de datos vacía.
-
-1.  Abre tu gestor de base de datos (MySQL Workbench, HeidiSQL o la terminal).
-2.  Ejecuta el siguiente comando SQL para crear la base de datos:
-    ```sql
-    CREATE DATABASE entrelanas_v2;
-    ```
-3.  ¡Listo! No necesitas crear tablas, la aplicación las creará automáticamente al iniciarse.
+### Frontend
+- React 18 + Vite
+- Bootstrap 5
+- CSS personalizado
+- Axios
+- React Router v6
+- PayPal SDK (`@paypal/react-paypal-js`)
 
 ---
 
-### PASO 2: Configuración y Ejecución del Backend (Servidor)
+## Estructura del proyecto
 
-El Backend es el cerebro de la aplicación. Debe estar encendido para que todo funcione.
-
-1.  Navega a la carpeta del Backend:
-    ```bash
-    cd EntreLanas-Back
-    ```
-
-2.  **Configurar la conexión a Base de Datos:**
-    * Abre el archivo: `src/main/resources/application.properties`.
-    * Busca las siguientes líneas y asegúrate de que coinciden con tu instalación de MySQL:
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/entrelanas_v2?createDatabaseIfNotExist=true
-    spring.datasource.username=root
-    spring.datasource.password=TU_CONTRASEÑA_DE_MYSQL  <-- PON AQUÍ TU CONTRASEÑA
-    ```
-
-3.  **Iniciar el Servidor:**
-    * Si usas **VS Code**: Abre el archivo `EntreLanasApplication.java` y pulsa el botón **"Run"** o **"Play"**.
-    * Si usas **Terminal**: Ejecuta el siguiente comando dentro de la carpeta `EntreLanas-Back`:
-        ```bash
-        ./mvnw spring-boot:run
-        ```
-    * *(En Windows PowerShell puede ser `./mvnw.cmd spring-boot:run`)*.
-
-4.  **Verificación:**
-    * Espera a que termine de cargar. Deberás ver un mensaje en la consola que dice: `Started EntreLanasApplication in X seconds`.
-    * El servidor estará escuchando en el puerto **8080**.
+```
+EntreLanas/
+├── EntreLanas-Back/        # Backend Spring Boot
+│   └── src/
+│       ├── main/
+│       │   ├── java/
+│       │   │   └── e_commerce/EntreLanas_Back/
+│       │   │       ├── Controller/
+│       │   │       ├── Services/
+│       │   │       ├── repositories/
+│       │   │       ├── model/
+│       │   │       ├── dtos/
+│       │   │       └── mappers/
+│       │   └── resources/
+│       │       ├── application.properties
+│       │       └── data.sql
+└── EntreLanas-Front/       # Frontend React
+    └── src/
+        ├── components/
+        ├── context/
+        ├── hooks/
+        └── pages/
+```
 
 ---
 
-### PASO 3: Configuración y Ejecución del Frontend (Cliente Web)
+## Requisitos previos
 
-Ahora vamos a arrancar la página web.
-
-1.  Abre una **NUEVA terminal** (no cierres la del Backend).
-2.  Navega a la carpeta del Frontend:
-    ```bash
-    cd EntreLanas-Front
-    ```
-
-3.  **Instalar las dependencias (Librerías):**
-    * Ejecuta el siguiente comando para descargar las librerías necesarias (React, Bootstrap, etc.):
-    ```bash
-    npm install
-    ```
-
-4.  **Iniciar la Web:**
-    * Ejecuta el comando:
-    ```bash
-    npm run dev
-    ```
-
-5.  Verás un mensaje que dice `Local: http://localhost:5173/`. Haz clic en ese enlace o ábrelo en tu navegador.
+- Java 17 o superior
+- Node.js 18 o superior y npm
+- MySQL 8 o superior
+- Maven (o usar el wrapper `mvnw` incluido)
 
 ---
 
-## 🛒 Cómo usar la aplicación
+## Instalación y puesta en marcha
 
-Una vez tengas todo corriendo (Backend en puerto 8080 y Frontend en puerto 5173):
+### 1. Clonar el repositorio
 
-### 1. Usuarios de Prueba
-La aplicación carga automáticamente unos datos de prueba al iniciar. Puedes usar estas credenciales para entrar sin registrarte:
+```bash
+git clone https://github.com/ucra0/EntreLanas.git
+cd EntreLanas
+```
 
-* **Usuario:** `maria`
-* **Contraseña:** `123`
+### 2. Configurar la base de datos
 
-* **Usuario:** `pepe`
-* **Contraseña:** `123`
+Crear una base de datos vacía en MySQL:
 
-* **Usuario:** `admin`
-* **Contraseña:** `123`
+```sql
+CREATE DATABASE entrelanas;
+```
 
-### 2. Flujo de prueba recomendado
-1.  Entra en la web. Verás el catálogo de productos.
-2.  Intenta añadir un producto al carrito (Botón **"Añadir"**).
-3.  Ve al **Login** e inicia sesión con `maria` / `123`.
-4.  Verás tu nombre en la barra superior ("Hola, Maria").
-5.  Añade varios productos al carrito.
-6.  Ve al **Carrito** (icono en el menú superior).
-7.  Pulsa en **"Pagar Ahora"** para simular la compra.
+### 3. Configurar el backend
+
+Editar el fichero `EntreLanas-Back/src/main/resources/application.properties` con tus credenciales:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/entrelanas
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_CONTRASEÑA
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=TU_EMAIL@gmail.com
+spring.mail.password=TU_APP_PASSWORD
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+app.mail.from=EntreLanas <TU_EMAIL@gmail.com>
+```
+
+### 4. Arrancar el backend
+
+```bash
+cd EntreLanas-Back
+./mvnw spring-boot:run
+```
+
+El backend arrancará en `http://localhost:8080`. En el primer arranque, Hibernate creará las tablas automáticamente y `data.sql` cargará los datos de prueba.
+
+### 5. Instalar dependencias del frontend
+
+```bash
+cd EntreLanas-Front
+npm install
+```
+
+### 6. Arrancar el frontend
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en `http://localhost:5173`.
+
+> El backend debe estar arrancado antes de abrir el frontend.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Credenciales de prueba
 
-* **Backend:**
-    * Java 21
-    * Spring Boot 3 (Web, Data JPA)
-    * MySQL Driver
-* **Frontend:**
-    * React JS + Vite
-    * Bootstrap 5 (Estilos)
-    * Axios (Conexión API)
-    * React Router DOM (Navegación)
-* **Base de Datos:**
-    * MySQL
+| Rol | Usuario | Contraseña |
+|---|---|---|
+| Administrador | admin | 123 |
+| Cliente | pepe | 123 |
+| Cliente | maria | 123
 
 ---
 
-## ❓ Solución de Problemas Comunes
+## Funcionalidades principales
 
-**Error: "Connection refused" o "Network Error" en el Frontend**
-* **Causa:** El Backend (Java) está apagado.
-* **Solución:** Asegúrate de que la terminal de Java sigue abierta y no ha dado errores.
+- Catálogo con filtros por categoría, color, fibra, talla, precio y más
+- Paginación actualizada por URL
+- Detalle de producto con gestión de stock
+- Carrito de compra
+- Checkout con múltiples métodos de pago (tarjeta, PayPal, Bizum, Klarna)
+- Registro con email de confirmación automático
+- Gestión de favoritos persistente
+- Lista de deseos para productos agotados
+- Historial de pedidos
+- Panel de administración completo (productos, pedidos, usuarios)
+- Sistema de roles (ROLE_USER / ROLE_ADMIN)
 
-**Error: "Access denied for user 'root'@'localhost'"**
-* **Causa:** La contraseña de la base de datos en `application.properties` es incorrecta.
-* **Solución:** Revisa el PASO 2 y pon tu contraseña real de MySQL.
+---
 
-**Error: "Port 8080 was already in use"**
-* **Causa:** Tienes otra instancia del servidor abierta.
-* **Solución:** Cierra todas las terminales de Java o reinicia el ordenador e inténtalo de nuevo.
+## Configuración del email
+
+El proyecto usa Gmail SMTP con contraseña de aplicación. Para generarla:
+
+1. Activa la verificación en dos pasos en tu cuenta de Google
+2. Ve a [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+3. Genera una contraseña para la aplicación y pégala en `application.properties`
+
+---
+
+## Licencia
+
+Proyecto académico desarrollado para el Proyecto Final de Ciclo DAW.  
+© 2025 — Todos los derechos reservados.
